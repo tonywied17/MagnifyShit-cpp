@@ -13,6 +13,7 @@ A simple C++ program that allows you to magnify content behind the window or fol
 |:---|:---|
 | `Scroll Up` / `Ctrl +` | Zoom in |
 | `Scroll Down` / `Ctrl -` | Zoom out |
+| `Ctrl + 0` | Reset zoom |
 
 ---
 
@@ -20,8 +21,16 @@ A simple C++ program that allows you to magnify content behind the window or fol
 
 | Key | Action |
 |:---|:---|
-| `Left Click (inside window)` | Toggle follow |
-| `Ctrl W` | Toggle follow |
+| `Ctrl W` | Toggle follow cursor/window |
+
+---
+
+### Borderless Mode
+
+| Key | Action |
+|:---|:---|
+| `Ctrl + B` | Toggle borderless mode |
+| `Left Click (Borderless Mode Only)` | Toggle attach/detach window to cursor |
 
 ---
 
