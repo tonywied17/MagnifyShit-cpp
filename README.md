@@ -21,7 +21,7 @@ A simple C++ program that allows you to magnify content behind the window or fol
 
 | Key | Action |
 |:---|:---|
-| `Ctrl W` | Toggle follow cursor/window |
+| `Ctrl + W` | Toggle magnification of either behind the window or the live cursor location |
 
 ---
 
