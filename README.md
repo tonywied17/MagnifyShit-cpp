@@ -1,5 +1,5 @@
 # Magnify Shit
-Mainly created to emulate a bifocal lense for my one monitor that is too far away because i'm blind.
+Mainly created to emulate a bifocal lense as a borderless window for my one monitor that is too far away because i'm blind.
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/tonywied17/ftp-client-cpp?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/top/tonywied17/ftp-client-cpp?style=for-the-badge)
