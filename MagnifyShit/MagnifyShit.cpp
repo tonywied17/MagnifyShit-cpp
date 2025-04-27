@@ -1,10 +1,10 @@
 ﻿/*
  * File: c:\Users\tonyw\source\repos\MagnifyShit\MagnifyShit\MagnifyShit.cpp
- * Project: c:\Users\tonyw\source\repos\MagnifyShit\MagnifyShit
+ * Project: c:\Users\tonyw\source\repos\MaginfyShit\MagnifyShit
  * Created Date: Saturday April 26th 2025
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat April 26th 2025 9:35:28
+ * Last Modified: Sun April 27th 2025 5:49:48 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2025 MolexWorks
@@ -20,7 +20,8 @@ constexpr int FOOTER_HEIGHT = 33;
 constexpr int REFRESH_RATE_MS = 8;
 
 // Global state
-namespace {
+namespace
+{
     HINSTANCE g_hInst;
     HWND g_hMainWnd, g_hMag;
     int g_zoom = 2;
@@ -52,17 +53,18 @@ void UpdateMagnifier()
     const int sourceHeight = height / g_zoom;
 
     POINT sourcePos{};
-    if (g_followMouse) {
+    if (g_followMouse)
+    {
         GetCursorPos(&sourcePos);
         sourcePos.x -= sourceWidth / 2;
         sourcePos.y -= sourceHeight / 2;
     }
-    else {
+    else
+    {
         sourcePos.x = ptClientTopLeft.x + (width - sourceWidth) / 2;
         sourcePos.y = ptClientTopLeft.y + (height - sourceHeight) / 2;
     }
 
-    // Clamp to virtual screen bounds
     const int vsx = GetSystemMetrics(SM_XVIRTUALSCREEN);
     const int vsy = GetSystemMetrics(SM_YVIRTUALSCREEN);
     const int vsw = GetSystemMetrics(SM_CXVIRTUALSCREEN);
@@ -71,45 +73,44 @@ void UpdateMagnifier()
     sourcePos.x = max(vsx, min(sourcePos.x, vsx + vsw - sourceWidth));
     sourcePos.y = max(vsy, min(sourcePos.y, vsy + vsh - sourceHeight));
 
-    // Set magnifier source and transform
-    MagSetWindowSource(g_hMag, { sourcePos.x, sourcePos.y, sourceWidth, sourceHeight });
+    MagSetWindowSource(g_hMag, {sourcePos.x, sourcePos.y, sourceWidth, sourceHeight});
 
     MAGTRANSFORM transform{};
     transform.v[0][0] = transform.v[1][1] = static_cast<float>(g_zoom);
     MagSetWindowTransform(g_hMag, &transform);
 }
 
-
 /**
  * @brief Draws the instruction footer on the main window.
  *
  * @param hdc Handle to the device context for drawing.
  */
-void DrawFooter(HDC hdc) {
-    if (!g_showFooter) return;
+void DrawFooter(HDC hdc)
+{
+    if (!g_showFooter)
+        return;
 
     RECT rc;
     GetClientRect(g_hMainWnd, &rc);
     rc.top = rc.bottom - FOOTER_HEIGHT;
 
-    const wchar_t* texts[] = {
+    const wchar_t *texts[] = {
         L" [Ctrl+B]: Borderless Mode",
         L" [Ctrl+0]: Reset Zoom  [Ctrl +/-]: Zoom In/Out ",
         L" [Ctrl+W]: Cursor/Window Magnifier ",
-        L" [Borderless Mode]: Click to attach/detach the window to cursor "
-    };
+        L" [Borderless Mode]: Click to attach/detach the window to cursor "};
 
     const UINT formats[] = {
         DT_RIGHT | DT_NOCLIP | DT_SINGLELINE | DT_TOP,
         DT_RIGHT | DT_NOCLIP | DT_SINGLELINE | DT_BOTTOM,
         DT_LEFT | DT_NOCLIP | DT_SINGLELINE | DT_TOP,
-        DT_LEFT | DT_NOCLIP | DT_SINGLELINE | DT_BOTTOM
-    };
+        DT_LEFT | DT_NOCLIP | DT_SINGLELINE | DT_BOTTOM};
 
     SetTextColor(hdc, RGB(0, 0, 255));
     SetBkMode(hdc, TRANSPARENT);
 
-    for (int i = 0; i < sizeof(texts) / sizeof(texts[0]); ++i) {
+    for (int i = 0; i < sizeof(texts) / sizeof(texts[0]); ++i)
+    {
         DrawTextW(hdc, texts[i], -1, &rc, formats[i]);
     }
 
@@ -119,10 +120,11 @@ void DrawFooter(HDC hdc) {
 
 /**
  * @brief Centers the window on the mouse cursor
- * 
+ *
  * @param hWnd Handle to the window to be centered.
  */
-void CenterWindowOnMouse(HWND hWnd) {
+void CenterWindowOnMouse(HWND hWnd)
+{
     POINT pt;
     GetCursorPos(&pt);
 
@@ -132,8 +134,8 @@ void CenterWindowOnMouse(HWND hWnd) {
     const int winHeight = rc.bottom - rc.top;
 
     SetWindowPos(hWnd, nullptr,
-        pt.x - winWidth / 2, pt.y - winHeight / 2,
-        0, 0, SWP_NOSIZE | SWP_NOZORDER);
+                 pt.x - winWidth / 2, pt.y - winHeight / 2,
+                 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
 
 /**
@@ -141,7 +143,8 @@ void CenterWindowOnMouse(HWND hWnd) {
  *
  * @param hWnd Handle to the main window.
  */
-void ToggleBorderlessMode(HWND hWnd) {
+void ToggleBorderlessMode(HWND hWnd)
+{
     const LONG style = GetWindowLong(hWnd, GWL_STYLE);
     const bool isBorderless = (style & WS_OVERLAPPEDWINDOW) == 0;
 
@@ -149,22 +152,22 @@ void ToggleBorderlessMode(HWND hWnd) {
 
     DWORD exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
     SetWindowLong(hWnd, GWL_STYLE,
-        isBorderless ? (style | WS_OVERLAPPEDWINDOW) & ~WS_POPUP
-        : (style & ~WS_OVERLAPPEDWINDOW) | WS_POPUP);
+                  isBorderless ? (style | WS_OVERLAPPEDWINDOW) & ~WS_POPUP
+                               : (style & ~WS_OVERLAPPEDWINDOW) | WS_POPUP);
 
     SetWindowLong(hWnd, GWL_EXSTYLE, exStyle | WS_EX_COMPOSITED | WS_EX_LAYERED);
 
     g_attachWindowToMouse = false;
 
     SetWindowPos(hWnd, nullptr, 0, 0, 0, 0,
-        SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_ASYNCWINDOWPOS);
+                 SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_ASYNCWINDOWPOS);
     SetFocus(hWnd);
 
     RECT rc;
     GetClientRect(hWnd, &rc);
     const int magHeight = rc.bottom - (g_showFooter ? FOOTER_HEIGHT : 0);
     SetWindowPos(g_hMag, nullptr, 0, 0, rc.right, magHeight,
-        SWP_NOZORDER | SWP_ASYNCWINDOWPOS);
+                 SWP_NOZORDER | SWP_ASYNCWINDOWPOS);
 
     InvalidateRect(hWnd, nullptr, TRUE);
 }
@@ -178,10 +181,12 @@ void ToggleBorderlessMode(HWND hWnd) {
  * @param lParam Additional message information.
  * @return The result of the message processing.
  */
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
     static RECT lastPosition{};
 
-    switch (msg) {
+    switch (msg)
+    {
     case WM_CREATE:
         SetWindowLong(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_COMPOSITED);
         SetTimer(hWnd, 1, REFRESH_RATE_MS, nullptr);
@@ -189,7 +194,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         break;
 
     case WM_SIZE:
-    case WM_MOVE: {
+    case WM_MOVE:
+    {
         RECT rc;
         GetClientRect(hWnd, &rc);
         const int magHeight = rc.bottom - (g_showFooter ? FOOTER_HEIGHT : 0);
@@ -199,29 +205,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     }
 
     case WM_TIMER:
-        if (g_attachWindowToMouse) {
+        if (g_attachWindowToMouse)
+        {
             POINT pt;
             GetCursorPos(&pt);
             RECT rc;
             GetWindowRect(hWnd, &rc);
 
-            if (pt.x != (rc.left + rc.right) / 2 || pt.y != (rc.top + rc.bottom) / 2) {
+            if (pt.x != (rc.left + rc.right) / 2 || pt.y != (rc.top + rc.bottom) / 2)
+            {
                 SetWindowPos(hWnd, nullptr,
-                    pt.x - (rc.right - rc.left) / 2,
-                    pt.y - (rc.bottom - rc.top) / 2,
-                    0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_ASYNCWINDOWPOS);
+                             pt.x - (rc.right - rc.left) / 2,
+                             pt.y - (rc.bottom - rc.top) / 2,
+                             0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_ASYNCWINDOWPOS);
             }
         }
         UpdateMagnifier();
         break;
 
     case WM_LBUTTONDOWN:
-        if (GetWindowLong(hWnd, GWL_STYLE) & WS_POPUP) {
+        if (GetWindowLong(hWnd, GWL_STYLE) & WS_POPUP)
+        {
             g_attachWindowToMouse = !g_attachWindowToMouse;
-            if (g_attachWindowToMouse) {
+            if (g_attachWindowToMouse)
+            {
                 CenterWindowOnMouse(hWnd);
             }
-            else {
+            else
+            {
                 g_followMouse = false;
             }
         }
@@ -229,7 +240,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         break;
 
     case WM_MOUSEWHEEL:
-    case WM_MOUSEHWHEEL: {
+    case WM_MOUSEHWHEEL:
+    {
         const int delta = GET_WHEEL_DELTA_WPARAM(wParam);
         g_zoom = max(1, g_zoom + (delta > 0 ? 1 : -1));
         UpdateMagnifier();
@@ -237,24 +249,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     }
 
     case WM_KEYDOWN:
-        if (GetKeyState(VK_CONTROL) & 0x8000) {
-            switch (LOWORD(wParam)) {
-            case 'B': case 'b':
+        if (GetKeyState(VK_CONTROL) & 0x8000)
+        {
+            switch (LOWORD(wParam))
+            {
+            case 'B':
+            case 'b':
                 ToggleBorderlessMode(hWnd);
                 break;
-            case 'W': case 'w':
+            case 'W':
+            case 'w':
                 g_followMouse = !g_followMouse;
                 UpdateMagnifier();
                 break;
-            case VK_ADD: case VK_OEM_PLUS:
+            case VK_ADD:
+            case VK_OEM_PLUS:
                 g_zoom++;
                 UpdateMagnifier();
                 break;
-            case VK_SUBTRACT: case VK_OEM_MINUS:
+            case VK_SUBTRACT:
+            case VK_OEM_MINUS:
                 g_zoom = max(1, g_zoom - 1);
                 UpdateMagnifier();
                 break;
-            case '0': case VK_NUMPAD0:
+            case '0':
+            case VK_NUMPAD0:
                 g_zoom = 1;
                 UpdateMagnifier();
                 break;
@@ -262,7 +281,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         }
         break;
 
-    case WM_PAINT: {
+    case WM_PAINT:
+    {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
         UpdateMagnifier();
@@ -289,10 +309,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
  * @param nCmdShow Show command for the window.
  * @return Exit code of the application.
  */
-int APIENTRY wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, int nCmdShow) {
+int APIENTRY wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, int nCmdShow)
+{
     g_hInst = hInst;
 
-    if (!MagInitialize()) {
+    if (!MagInitialize())
+    {
         return -1;
     }
 
@@ -307,8 +329,7 @@ int APIENTRY wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, int nCmdShow) {
         reinterpret_cast<HBRUSH>(COLOR_BTNFACE + 1),
         nullptr,
         L"MagHost",
-        nullptr
-    };
+        nullptr};
     RegisterClassExW(&wc);
 
     g_hMainWnd = CreateWindowExW(
@@ -345,7 +366,8 @@ int APIENTRY wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, int nCmdShow) {
     InvalidateRect(g_hMainWnd, nullptr, TRUE);
 
     MSG msg;
-    while (GetMessage(&msg, nullptr, 0, 0)) {
+    while (GetMessage(&msg, nullptr, 0, 0))
+    {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }

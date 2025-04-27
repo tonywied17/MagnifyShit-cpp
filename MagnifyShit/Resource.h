@@ -1,63 +1,32 @@
-//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by MagnifyShit.rc
-
-//#define IDS_APP_TITLE			103
-//
-//#define IDR_MAINFRAME			128
-//#define IDD_MAGNIFYSHIT_DIALOG	102
-//#define IDD_ABOUTBOX			103
-//#define IDM_ABOUT				104
-//#define IDM_EXIT				105
-//#define IDI_MAGNIFYSHIT			107
-//#define IDI_SMALL				108
-//#define IDC_MAGNIFYSHIT			109
-//#define IDC_MYICON				2
-//#ifndef IDC_STATIC
-//#define IDC_STATIC				-1
-//#endif
-//// Next default values for new objects
-////
-//#ifdef APSTUDIO_INVOKED
-//#ifndef APSTUDIO_READONLY_SYMBOLS
-//
-//#define _APS_NO_MFC					130
-//#define _APS_NEXT_RESOURCE_VALUE	129
-//#define _APS_NEXT_COMMAND_VALUE		32771
-//#define _APS_NEXT_CONTROL_VALUE		1000
-//#define _APS_NEXT_SYMED_VALUE		110
-//#endif
-//#endif
-
 /*
  * File: c:\Users\tonyw\source\repos\MagnifyShit\MagnifyShit\Resource.h
- * Project: c:\Users\tonyw\source\repos\MaginfyShit\MaginfyShit
+ * Project: c:\Users\tonyw\source\repos\MaginfyShit\MagnifyShit
  * Created Date: Saturday April 26th 2025
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat April 26th 2025 11:28:43 
+ * Last Modified: Sun April 27th 2025 5:50:46 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2025 MolexWorks
  */
 
 #pragma once
- // main window controls
-#define ID_CONFIG_BUTTON   101    // footer “Configure…” button
+// main window controls
+// #define ID_CONFIG_BUTTON 101
 
 // configuration dialog
-#define IDD_CONFIG         201    // dialog resource
-#define IDC_ACTION         202    // combobox: select action
-#define IDC_HOTKEY         203    // edit: shows recorded key
-#define IDC_RECORD         204    // button: begin recording
+// #define IDD_CONFIG 201 // dialog resource
+// #define IDC_ACTION 202 // combobox: select action
+// #define IDC_HOTKEY 203 // edit: shows recorded key
+// #define IDC_RECORD 204 // button: begin recording
 
 // standard IDs
-#define IDOK               1
-#define IDCANCEL           2
-#define IDS_APP_TITLE           103
-#define IDI_MAGNIFYSHIT			107
-#define IDC_MAGNIFYSHIT         109
+#define IDOK 1
+#define IDCANCEL 2
+#define IDS_APP_TITLE 103
+#define IDI_MAGNIFYSHIT 107
+#define IDC_MAGNIFYSHIT 109
 
 #ifndef IDC_STATIC
-#define IDC_STATIC              -1
+#define IDC_STATIC -1
 #endif
