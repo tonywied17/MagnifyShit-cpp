@@ -30,12 +30,9 @@ Mainly created to emulate a bifocal lense as a borderless window for my one moni
 | `Ctrl + B` | Toggle borderless mode |
 | `Left Click (Borderless Mode Only)` | Toggle attach/detach window to cursor |
 
-## Usage
-
-### Image Example 1
+## Screenshots
 ![Usage Example 1](https://raw.githubusercontent.com/tonywied17/MagnifyShit-cpp/refs/heads/main/MagnifyShit/Repo%20Assets/use1.png)
 
-### Image Example 2
 ![Usage Example 2](https://raw.githubusercontent.com/tonywied17/MagnifyShit-cpp/refs/heads/main/MagnifyShit/Repo%20Assets/use2.gif)
 
 ---
