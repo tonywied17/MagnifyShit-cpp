@@ -45,6 +45,6 @@ A simple C++ program that allows you to magnify content behind the window or fol
 ---
 
 ## Todo
-- [*] Add a toggle to make borderless
+- [x] Add a toggle to make borderless
 - [ ] Add a screenshot functionality
 - [ ] Add a screen recording functionality
