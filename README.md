@@ -1,5 +1,5 @@
 # Magnify Shit
-A simple C++ program that allows you to magnify content behind the window or follow the cursor.
+Mainly created to emulate a bifocal lense for my one monitor that is too far away because i'm blind.
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/tonywied17/ftp-client-cpp?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/top/tonywied17/ftp-client-cpp?style=for-the-badge)
@@ -29,7 +29,6 @@ A simple C++ program that allows you to magnify content behind the window or fol
 |:---|:---|
 | `Ctrl + B` | Toggle borderless mode |
 | `Left Click (Borderless Mode Only)` | Toggle attach/detach window to cursor |
-
 
 ## Usage
 
