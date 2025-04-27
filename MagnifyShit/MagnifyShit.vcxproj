@@ -22,7 +22,7 @@
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{40e323fc-0467-483c-96b2-61ab460c3ca2}</ProjectGuid>
-    <RootNamespace>MaginfyShit</RootNamespace>
+    <RootNamespace>MagnifyShit</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -131,18 +131,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="MaginfyShit.h" />
+    <ClInclude Include="MagnifyShit.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MaginfyShit.cpp" />
+    <ClCompile Include="MagnifyShit.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MaginfyShit.rc" />
+    <ResourceCompile Include="MagnifyShit.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="MaginfyShit.ico" />
+    <Image Include="MagnifyShit.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

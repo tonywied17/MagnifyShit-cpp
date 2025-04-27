@@ -1,16 +1,17 @@
 ﻿/*
- * File: c:\Users\tonyw\source\repos\MaginfyShit\MaginfyShit\MaginfyShit.cpp
- * Project: c:\Users\tonyw\source\repos\MaginfyShit\MaginfyShit
+ * File: c:\Users\tonyw\source\repos\MagnifyShit\MagnifyShit\MagnifyShit.cpp
+ * Project: c:\Users\tonyw\source\repos\MagnifyShit\MagnifyShit
  * Created Date: Saturday April 26th 2025
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat April 26th 2025 9:20:39 
+ * Last Modified: Sat April 26th 2025 9:35:28 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2025 MolexWorks
  */
 
 #include <windows.h>
+#include "resource.h"
 #include <magnification.h>
 #pragma comment(lib, "Magnification.lib")
 
@@ -18,7 +19,7 @@ HINSTANCE   g_hInst;                /**< Application instance handle */
 HWND        g_hMainWnd, g_hMag;     /**< Handles for main and magnifier windows */
 int         g_zoom = 2;             /**< Magnification zoom level */
 bool        g_followMouse = false;  /**< Flag to toggle mouse-follow mode */
-const int   FOOTER_H = 33;          /**< Height of the instruction footer */
+const int   FOOTER_H = 28;          /**< Height of the instruction footer */
 
 /**
  * @brief Updates the magnifier's source region and transformation matrix.
@@ -63,15 +64,17 @@ void UpdateMag()
  *
  * @param hdc Handle to the device context for drawing.
  */
-void DrawFooter(HDC hdc)
+static void DrawFooter(HDC hdc)
 {
     RECT rc;
     GetClientRect(g_hMainWnd, &rc);
     rc.top = rc.bottom - FOOTER_H;
-    const wchar_t* text = L"(ScrollWheel) or (Ctrl+/-) to zoom  •  (Click Window) or (Ctrl+W) to toggle cursor/window follow";
-    SetTextColor(hdc, RGB(0, 0, 255));
+    const wchar_t* text1 = L"(Scroll Up/Down) or (Ctrl+/-) to zoom ";
+    const wchar_t* text2 = L"(Click Window) or (Ctrl+W) to toggle cursor/window follow ";
+    SetTextColor(hdc, RGB(0, 0, 0));
     SetBkMode(hdc, TRANSPARENT);
-    DrawTextW(hdc, text, -1, &rc, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+    DrawTextW(hdc, text1, -1, &rc, DT_RIGHT | DT_NOCLIP | DT_SINGLELINE);
+	DrawTextW(hdc, text2, -1, &rc, DT_RIGHT | DT_NOCLIP | DT_SINGLELINE | DT_BOTTOM);
 }
 
 /**
@@ -90,6 +93,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_CREATE:
         //SetTimer(hWnd, 1, 16, NULL);               /**< Set timer for ~60 Hz refresh */
         SetTimer(hWnd, 1, 8, NULL);                  /**< ~125 Hz refresh */
+        SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
         break;
 
     case WM_SIZE: case WM_MOVE:
@@ -186,6 +190,14 @@ int APIENTRY wWinMain(HINSTANCE hInst, HINSTANCE, LPWSTR, int nCmdShow)
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT, 1000, 700,
         NULL, NULL, hInst, NULL);
+
+    // Set the window icon to the defined application icon
+    HICON hIcon = LoadIcon(hInst, MAKEINTRESOURCE(IDI_MAGNIFYSHIT));
+
+
+    SetClassLongPtr(g_hMainWnd, GCLP_HICON, (LONG_PTR)hIcon);
+    SendMessage(g_hMainWnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+
     SetLayeredWindowAttributes(g_hMainWnd, 0, 255, LWA_ALPHA);
     ShowWindow(g_hMainWnd, nCmdShow);
 

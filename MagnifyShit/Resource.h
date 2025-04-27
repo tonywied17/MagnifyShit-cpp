@@ -1,17 +1,17 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by MaginfyShit.rc
+// Used by MagnifyShit.rc
 
 //#define IDS_APP_TITLE			103
 //
 //#define IDR_MAINFRAME			128
-//#define IDD_MAGINFYSHIT_DIALOG	102
+//#define IDD_MAGNIFYSHIT_DIALOG	102
 //#define IDD_ABOUTBOX			103
 //#define IDM_ABOUT				104
 //#define IDM_EXIT				105
-//#define IDI_MAGINFYSHIT			107
+//#define IDI_MAGNIFYSHIT			107
 //#define IDI_SMALL				108
-//#define IDC_MAGINFYSHIT			109
+//#define IDC_MAGNIFYSHIT			109
 //#define IDC_MYICON				2
 //#ifndef IDC_STATIC
 //#define IDC_STATIC				-1
@@ -30,12 +30,12 @@
 //#endif
 
 /*
- * File: c:\Users\tonyw\source\repos\MaginfyShit\MaginfyShit\Resource.h
+ * File: c:\Users\tonyw\source\repos\MagnifyShit\MagnifyShit\Resource.h
  * Project: c:\Users\tonyw\source\repos\MaginfyShit\MaginfyShit
  * Created Date: Saturday April 26th 2025
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sat April 26th 2025 9:20:57 
+ * Last Modified: Sat April 26th 2025 11:28:43 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2025 MolexWorks
@@ -44,7 +44,8 @@
 #pragma once
 
 #define IDS_APP_TITLE           103
-#define IDC_MAGINFYSHIT          109
+#define IDI_MAGNIFYSHIT			107
+#define IDC_MAGNIFYSHIT         109
 
 #ifndef IDC_STATIC
 #define IDC_STATIC              -1
