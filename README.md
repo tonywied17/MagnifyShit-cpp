@@ -11,8 +11,8 @@ A simple C++ program that allows you to magnify content behind the window or fol
 
 | Key | Action |
 |:---|:---|
-| `Scroll Wheel` | Zoom in/out |
-| `Ctrl + +` / `Ctrl + -` | Zoom in/out |
+| `Scroll Up` / `Ctrl +` | Zoom in |
+| `Scroll Down` / `Ctrl -` | Zoom out |
 
 ---
 
@@ -21,7 +21,7 @@ A simple C++ program that allows you to magnify content behind the window or fol
 | Key | Action |
 |:---|:---|
 | `Click Window` | Toggle follow |
-| `Ctrl + W` | Toggle follow |
+| `Ctrl W` | Toggle follow |
 
 ---
 
