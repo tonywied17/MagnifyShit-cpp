@@ -35,8 +35,6 @@ Mainly created to emulate a bifocal lense as a borderless window for my one moni
 
 ![Usage Example 2](https://raw.githubusercontent.com/tonywied17/MagnifyShit-cpp/refs/heads/main/MagnifyShit/Repo%20Assets/use2.gif)
 
----
-
 ## Todo
 - [x] Add a toggle to make borderless
 - [ ] Add a screenshot functionality
