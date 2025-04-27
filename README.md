@@ -20,7 +20,7 @@ A simple C++ program that allows you to magnify content behind the window or fol
 
 | Key | Action |
 |:---|:---|
-| `Click Window` | Toggle follow |
+| `Left Click (inside window)` | Toggle follow |
 | `Ctrl W` | Toggle follow |
 
 ---
