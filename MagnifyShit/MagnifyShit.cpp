@@ -4,7 +4,7 @@
  * Created Date: Saturday April 26th 2025
  * Author: Tony Wiedman
  * -----
- * Last Modified: Sun April 27th 2025 5:49:48 
+ * Last Modified: Mon April 28th 2025 7:11:44 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2025 MolexWorks
@@ -23,23 +23,23 @@ constexpr int REFRESH_RATE_MS = 1;
 
 enum class MagnifierMode
 {
-    FollowMouse,      // The magnifier follows the mouse cursor
-    AttachToMouse,    // The magnifier is attached to the mouse cursor
-    None              // No specific magnifier mode
+    FollowMouse,   // The magnifier follows the mouse cursor
+    AttachToMouse, // The magnifier is attached to the mouse cursor
+    None           // No specific magnifier mode
 };
 
 enum class BorderlessMode
 {
-    Enabled,          // Borderless mode enabled
-    Disabled          // Borderless mode disabled
+    Enabled, // Borderless mode enabled
+    Disabled // Borderless mode disabled
 };
 
 enum class ZoomLevel
 {
-    Default,          // Default zoom level 2.0x
-    ZoomIn,           // Zoom in by a factor of 0.1x
-    ZoomOut,          // Zoom out by a factor of 0.1x
-	Reset             // Reset zoom to 1.0x zoom level
+    Default, // Default zoom level 2.0x
+    ZoomIn,  // Zoom in by a factor of 0.1x
+    ZoomOut, // Zoom out by a factor of 0.1x
+    Reset    // Reset zoom to 1.0x zoom level
 };
 
 // @ Global Variables  -------------------------------------------------------------------------------
@@ -51,10 +51,9 @@ namespace
     float g_zoom = 2.0f;
     MagnifierMode g_magnifierMode = MagnifierMode::None;
     BorderlessMode g_borderlessMode = BorderlessMode::Disabled;
-	ZoomLevel g_zoomLevel = ZoomLevel::Default;
+    ZoomLevel g_zoomLevel = ZoomLevel::Default;
     bool g_showFooter = true;
 }
-
 
 // @ Function Prototypes  ----------------------------------------------------------------------------
 
@@ -64,8 +63,7 @@ void HandleZoom(WPARAM wParam);
 void ToggleBorderlessMode(HWND hWnd);
 void DrawFooter(HDC hdc);
 void UpdateWindowTitle();
-void DrawTextWithFormat(HDC hdc, const wchar_t* text, RECT& rc, UINT format);
-
+void DrawTextWithFormat(HDC hdc, const wchar_t *text, RECT &rc, UINT format);
 
 // @ Window Procedure  -------------------------------------------------------------------------------
 
@@ -112,9 +110,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
             if (pt.x != (rc.left + rc.right) / 2 || pt.y != (rc.top + rc.bottom) / 2)
             {
                 SetWindowPos(hWnd, nullptr,
-                    pt.x - (rc.right - rc.left) / 2,
-                    pt.y - (rc.bottom - rc.top) / 2,
-                    0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_ASYNCWINDOWPOS);
+                             pt.x - (rc.right - rc.left) / 2,
+                             pt.y - (rc.bottom - rc.top) / 2,
+                             0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_ASYNCWINDOWPOS);
             }
         }
         UpdateMagnifier();
@@ -122,10 +120,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
     case WM_LBUTTONDOWN:
         g_magnifierMode = (GetWindowLong(hWnd, GWL_STYLE) & WS_POPUP)
-            ? (g_magnifierMode == MagnifierMode::AttachToMouse
-                ? MagnifierMode::None
-                : MagnifierMode::AttachToMouse)
-            : g_magnifierMode;
+                              ? (g_magnifierMode == MagnifierMode::AttachToMouse
+                                     ? MagnifierMode::None
+                                     : MagnifierMode::AttachToMouse)
+                              : g_magnifierMode;
 
         if (g_magnifierMode == MagnifierMode::AttachToMouse)
         {
@@ -165,8 +163,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
             case 'W':
             case 'w':
                 g_magnifierMode = (g_magnifierMode == MagnifierMode::FollowMouse)
-                    ? MagnifierMode::None
-                    : MagnifierMode::FollowMouse;
+                                      ? MagnifierMode::None
+                                      : MagnifierMode::FollowMouse;
                 UpdateMagnifier();
                 break;
             case VK_ADD:
@@ -209,7 +207,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
-
 // @ Magnifier Functions  ----------------------------------------------------------------------------
 
 /**
@@ -221,11 +218,10 @@ static void HandleZoom(WPARAM wParam)
 {
     int wheelDelta = GET_WHEEL_DELTA_WPARAM(wParam);
 
-    g_zoom = (g_zoomLevel == ZoomLevel::ZoomIn) ? g_zoom + 0.1f :
-        (g_zoomLevel == ZoomLevel::ZoomOut) ? max(1.0f, g_zoom - 0.1f) :
-        (g_zoomLevel == ZoomLevel::Reset) ? 1.0f :
-        (g_zoomLevel == ZoomLevel::Default) ? (wheelDelta > 0 ? g_zoom + 0.1f : max(1.0f, g_zoom - 0.1f)) :
-        g_zoom;
+    g_zoom = (g_zoomLevel == ZoomLevel::ZoomIn) ? g_zoom + 0.1f : (g_zoomLevel == ZoomLevel::ZoomOut) ? max(1.0f, g_zoom - 0.1f)
+                                                              : (g_zoomLevel == ZoomLevel::Reset)     ? 1.0f
+                                                              : (g_zoomLevel == ZoomLevel::Default)   ? (wheelDelta > 0 ? g_zoom + 0.1f : max(1.0f, g_zoom - 0.1f))
+                                                                                                      : g_zoom;
 
     g_zoom = min(5.0f, max(1.0f, g_zoom));
 
@@ -250,7 +246,8 @@ void UpdateMagnifier()
     const int sourceHeight = height / g_zoom;
 
     POINT sourcePos{};
-    switch (g_magnifierMode) {
+    switch (g_magnifierMode)
+    {
     case MagnifierMode::FollowMouse:
         GetCursorPos(&sourcePos);
         sourcePos.x -= sourceWidth / 2;
@@ -275,13 +272,12 @@ void UpdateMagnifier()
     sourcePos.x = max(vsx, min(sourcePos.x, vsx + vsw - sourceWidth));
     sourcePos.y = max(vsy, min(sourcePos.y, vsy + vsh - sourceHeight));
 
-    MagSetWindowSource(g_hMag, { sourcePos.x, sourcePos.y, sourceWidth, sourceHeight });
+    MagSetWindowSource(g_hMag, {sourcePos.x, sourcePos.y, sourceWidth, sourceHeight});
 
     MAGTRANSFORM transform{};
     transform.v[0][0] = transform.v[1][1] = g_zoom;
     MagSetWindowTransform(g_hMag, &transform);
 }
-
 
 // @ Window Helper Functions  ------------------------------------------------------------------------
 
@@ -303,25 +299,25 @@ void ToggleBorderlessMode(HWND hWnd)
 
     DWORD exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
     SetWindowLong(hWnd, GWL_STYLE,
-        currentMode == BorderlessMode::Enabled
-        ? (style | WS_OVERLAPPEDWINDOW) & ~WS_POPUP
-        : (style & ~WS_OVERLAPPEDWINDOW) | WS_POPUP);
+                  currentMode == BorderlessMode::Enabled
+                      ? (style | WS_OVERLAPPEDWINDOW) & ~WS_POPUP
+                      : (style & ~WS_OVERLAPPEDWINDOW) | WS_POPUP);
 
     SetWindowLong(hWnd, GWL_EXSTYLE, exStyle | WS_EX_COMPOSITED | WS_EX_LAYERED);
 
     g_magnifierMode = (currentMode == BorderlessMode::Enabled)
-        ? MagnifierMode::None
-        : (previousMode == MagnifierMode::FollowMouse ? MagnifierMode::FollowMouse : MagnifierMode::None);
+                          ? MagnifierMode::None
+                          : (previousMode == MagnifierMode::FollowMouse ? MagnifierMode::FollowMouse : MagnifierMode::None);
 
     SetWindowPos(hWnd, nullptr, 0, 0, 0, 0,
-        SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_ASYNCWINDOWPOS);
+                 SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED | SWP_ASYNCWINDOWPOS);
     SetFocus(hWnd);
 
     RECT rc;
     GetClientRect(hWnd, &rc);
     const int magHeight = rc.bottom - (g_showFooter ? FOOTER_HEIGHT : 0);
     SetWindowPos(g_hMag, nullptr, 0, 0, rc.right, magHeight,
-        SWP_NOZORDER | SWP_ASYNCWINDOWPOS);
+                 SWP_NOZORDER | SWP_ASYNCWINDOWPOS);
 
     InvalidateRect(hWnd, nullptr, TRUE);
 }
@@ -342,7 +338,7 @@ void UpdateWindowTitle()
  * @param hWnd Handle to the window to be repositioned.
  * @param pt The cursor position to center the window on.
  */
-static void UpdateWindowPosition(HWND hWnd, const POINT& pt)
+static void UpdateWindowPosition(HWND hWnd, const POINT &pt)
 {
     RECT rc;
     GetWindowRect(hWnd, &rc);
@@ -350,9 +346,9 @@ static void UpdateWindowPosition(HWND hWnd, const POINT& pt)
     if (pt.x != (rc.left + rc.right) / 2 || pt.y != (rc.top + rc.bottom) / 2)
     {
         SetWindowPos(hWnd, nullptr,
-            pt.x - (rc.right - rc.left) / 2,
-            pt.y - (rc.bottom - rc.top) / 2,
-            0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_ASYNCWINDOWPOS);
+                     pt.x - (rc.right - rc.left) / 2,
+                     pt.y - (rc.bottom - rc.top) / 2,
+                     0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_ASYNCWINDOWPOS);
     }
 }
 
@@ -372,8 +368,8 @@ void CenterWindowOnMouse(HWND hWnd)
     const int winHeight = rc.bottom - rc.top;
 
     SetWindowPos(hWnd, nullptr,
-        pt.x - winWidth / 2, pt.y - winHeight / 2,
-        0, 0, SWP_NOSIZE | SWP_NOZORDER);
+                 pt.x - winWidth / 2, pt.y - winHeight / 2,
+                 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 }
 
 /**
@@ -392,16 +388,15 @@ void DrawFooter(HDC hdc)
 
     const struct FooterText
     {
-        const wchar_t* text;
+        const wchar_t *text;
         UINT format;
     } footerTexts[] = {
         {L" [Ctrl+B]: Borderless Mode", DT_RIGHT | DT_NOCLIP | DT_SINGLELINE | DT_TOP},
         {L" [Ctrl+0]: Reset Zoom  [Ctrl +/-]: Zoom In/Out ", DT_RIGHT | DT_NOCLIP | DT_SINGLELINE | DT_BOTTOM},
         {L" [Ctrl+W]: Cursor/Window Magnifier ", DT_LEFT | DT_NOCLIP | DT_SINGLELINE | DT_TOP},
-        {L" [Borderless Mode]: Click to attach/detach the window to cursor ", DT_LEFT | DT_NOCLIP | DT_SINGLELINE | DT_BOTTOM}
-    };
+        {L" [Borderless Mode]: Click to attach/detach the window to cursor ", DT_LEFT | DT_NOCLIP | DT_SINGLELINE | DT_BOTTOM}};
 
-    for (const auto& footer : footerTexts)
+    for (const auto &footer : footerTexts)
     {
         DrawTextWithFormat(hdc, footer.text, rc, footer.format);
     }
@@ -415,14 +410,14 @@ void DrawFooter(HDC hdc)
  * @param rc The rectangle in which to draw the text.
  * @param format The format for drawing the text.
  */
-void DrawTextWithFormat(HDC hdc, const wchar_t* text, RECT& rc, UINT format) {
+void DrawTextWithFormat(HDC hdc, const wchar_t *text, RECT &rc, UINT format)
+{
     SetTextColor(hdc, RGB(0, 0, 255));
     SetBkMode(hdc, TRANSPARENT);
     DrawTextW(hdc, text, -1, &rc, format);
     SetTextColor(hdc, RGB(0, 0, 0));
     SetBkMode(hdc, OPAQUE);
 }
-
 
 // @ Entry Point  ------------------------------------------------------------------------------------
 
