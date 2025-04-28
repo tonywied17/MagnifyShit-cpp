@@ -4,7 +4,7 @@
  * Created Date: Saturday April 26th 2025
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon April 28th 2025 7:11:44 
+ * Last Modified: Mon April 28th 2025 7:15:41 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2025 MolexWorks
@@ -212,16 +212,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 /**
  * @brief Handles zoom level changes based on mouse wheel input.
  *
- * @param wParam The wheel delta value from the mouse event.
+ * @param wParam The wParam parameter from the mouse wheel or keyboard event.
  */
 static void HandleZoom(WPARAM wParam)
 {
     int wheelDelta = GET_WHEEL_DELTA_WPARAM(wParam);
 
-    g_zoom = (g_zoomLevel == ZoomLevel::ZoomIn) ? g_zoom + 0.1f : (g_zoomLevel == ZoomLevel::ZoomOut) ? max(1.0f, g_zoom - 0.1f)
-                                                              : (g_zoomLevel == ZoomLevel::Reset)     ? 1.0f
-                                                              : (g_zoomLevel == ZoomLevel::Default)   ? (wheelDelta > 0 ? g_zoom + 0.1f : max(1.0f, g_zoom - 0.1f))
-                                                                                                      : g_zoom;
+    g_zoom = (g_zoomLevel == ZoomLevel::ZoomIn)
+                 ? g_zoom + 0.1f
+             : (g_zoomLevel == ZoomLevel::ZoomOut)
+                 ? max(1.0f, g_zoom - 0.1f)
+             : (g_zoomLevel == ZoomLevel::Reset)
+                 ? 1.0f
+             : (g_zoomLevel == ZoomLevel::Default)
+                 ? (wheelDelta > 0
+                        ? g_zoom + 0.1f
+                        : max(1.0f, g_zoom - 0.1f))
+                 : g_zoom;
 
     g_zoom = min(5.0f, max(1.0f, g_zoom));
 
