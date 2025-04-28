@@ -136,6 +136,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="globals.cpp" />
     <ClCompile Include="MagnifyShit.cpp" />
   </ItemGroup>
   <ItemGroup>
