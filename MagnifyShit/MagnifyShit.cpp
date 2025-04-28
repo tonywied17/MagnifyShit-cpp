@@ -12,11 +12,7 @@
 
 // @ Includes  ---------------------------------------------------------------------------------------
 
-#include <cwchar> 
-#include <windows.h>
-#include "resource.h"
-#include <magnification.h>
-#pragma comment(lib, "Magnification.lib")
+#include "MagnifyShit.h"
 
 // @ Constants  --------------------------------------------------------------------------------------
 
