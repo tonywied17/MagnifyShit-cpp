@@ -12,7 +12,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <stdio.h>
-#include <cwchar> 
+#include <cwchar>
 
 // Application Header Files
 #include "resource.h"
