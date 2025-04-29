@@ -4,7 +4,7 @@
  * Created Date: Saturday April 26th 2025
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon April 28th 2025 10:07:32 
+ * Last Modified: Mon April 28th 2025 10:22:03 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2025 MolexWorks
@@ -23,23 +23,23 @@ constexpr int REFRESH_RATE_MS = 1;
 
 enum class MagnifierMode
 {
-    FollowMouse,   // The magnifier follows the mouse cursor
-    AttachToMouse, // The magnifier is attached to the mouse cursor
-    None           // No specific magnifier mode
+    FollowMouse,   ///< The magnifier follows the mouse cursor
+    AttachToMouse, ///< The magnifier is attached to the mouse cursor
+    None           ///< No specific magnifier mode
 };
 
 enum class BorderlessMode
 {
-    Enabled, // Borderless mode enabled
-    Disabled // Borderless mode disabled
+    Enabled, ///< Borderless mode enabled
+    Disabled ///< Borderless mode disabled
 };
 
 enum class ZoomLevel
 {
-    Default, // Default zoom level 2.0x
-    ZoomIn,  // Zoom in by a factor of 0.1x
-    ZoomOut, // Zoom out by a factor of 0.1x
-    Reset    // Reset zoom to 1.0x zoom level
+    Default, ///< Default zoom level 2.0x
+    ZoomIn,  ///< Zoom in by a factor of 0.1x
+    ZoomOut, ///< Zoom out by a factor of 0.1x
+    Reset    ///< Reset zoom to 1.0x zoom level
 };
 
 // @ Global Variables  -------------------------------------------------------------------------------
@@ -101,44 +101,51 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
     case WM_TIMER:
     {
-        if (g_magnifierMode == MagnifierMode::AttachToMouse)
-        {
-            POINT pt;
-            GetCursorPos(&pt);
-            RECT rc;
-            GetWindowRect(hWnd, &rc);
-    
-            if (pt.x != (rc.left + rc.right) / 2 || pt.y != (rc.top + rc.bottom) / 2)
+        g_magnifierMode == MagnifierMode::AttachToMouse
+            ? [&]()
             {
-                SetWindowPos(
-                    hWnd,
-                    nullptr,
-                    pt.x - (rc.right - rc.left) / 2,
-                    pt.y - (rc.bottom - rc.top) / 2,
-                    0, 0,
-                    SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_ASYNCWINDOWPOS
-                );
-            }
-        }
-    
+                POINT pt;
+                GetCursorPos(&pt);
+                RECT rc;
+                GetWindowRect(hWnd, &rc);
+
+                int centerX = (rc.left + rc.right) / 2;
+                int centerY = (rc.top + rc.bottom) / 2;
+
+                (pt.x != centerX || pt.y != centerY)
+                    ? static_cast<void>(SetWindowPos(
+                        hWnd,
+                        nullptr,
+                        pt.x - (rc.right - rc.left) / 2,
+                        pt.y - (rc.bottom - rc.top) / 2,
+                        0, 0,
+                        SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_ASYNCWINDOWPOS
+                    ))
+                    : static_cast<void>(0);
+            }()
+            : static_cast<void>(0);
+
         UpdateMagnifier();
         break;
     }
 
     case WM_LBUTTONDOWN:
     {
-        g_magnifierMode = (GetWindowLong(hWnd, GWL_STYLE) & WS_POPUP)
-            ? (g_magnifierMode == MagnifierMode::AttachToMouse
-                ? MagnifierMode::None
-                : MagnifierMode::AttachToMouse)
+        g_magnifierMode = GetWindowLong(hWnd, GWL_STYLE) & WS_POPUP
+            ? (g_magnifierMode == MagnifierMode::AttachToMouse ? MagnifierMode::None : MagnifierMode::AttachToMouse)
             : g_magnifierMode;
 
-        if (g_magnifierMode == MagnifierMode::AttachToMouse)
-        {
-            CenterWindowOnMouse(hWnd);
-        }
+        g_magnifierMode == MagnifierMode::AttachToMouse ? CenterWindowOnMouse(hWnd) : (void)0;
 
         UpdateMagnifier();
+        break;
+    }
+
+    case WM_MOUSEWHEEL:
+    case WM_MOUSEHWHEEL:
+    {
+        g_zoomLevel = ZoomLevel::Default;
+        HandleZoom(wParam);
         break;
     }
 
@@ -147,10 +154,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         {
             const LONG style = GetWindowLong(hWnd, GWL_STYLE);
             const bool isBorderless = (style & WS_OVERLAPPEDWINDOW) == 0;
-            if (isBorderless)
-            {
-                ToggleBorderlessMode(hWnd);
-            }
+            isBorderless ? ToggleBorderlessMode(hWnd) : void();
             break;
         }
         if (GetKeyState(VK_CONTROL) & 0x8000)
@@ -221,15 +225,13 @@ static void HandleZoom(WPARAM wParam)
 
     g_zoom = (g_zoomLevel == ZoomLevel::ZoomIn)
                  ? g_zoom + 0.1f
-             : (g_zoomLevel == ZoomLevel::ZoomOut)
-                 ? max(1.0f, g_zoom - 0.1f)
-             : (g_zoomLevel == ZoomLevel::Reset)
-                 ? 1.0f
-             : (g_zoomLevel == ZoomLevel::Default)
-                 ? (wheelDelta > 0
-                        ? g_zoom + 0.1f
-                        : max(1.0f, g_zoom - 0.1f))
-                 : g_zoom;
+                 : (g_zoomLevel == ZoomLevel::ZoomOut)
+                       ? max(1.0f, g_zoom - 0.1f)
+                       : (g_zoomLevel == ZoomLevel::Reset)
+                             ? 1.0f
+                             : (g_zoomLevel == ZoomLevel::Default)
+                                   ? (wheelDelta > 0 ? g_zoom + 0.1f : max(1.0f, g_zoom - 0.1f))
+                                   : g_zoom;
 
     g_zoom = min(5.0f, max(1.0f, g_zoom));
 
