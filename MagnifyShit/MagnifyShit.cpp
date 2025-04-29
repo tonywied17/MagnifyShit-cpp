@@ -4,7 +4,7 @@
  * Created Date: Saturday April 26th 2025
  * Author: Tony Wiedman
  * -----
- * Last Modified: Mon April 28th 2025 7:15:41 
+ * Last Modified: Mon April 28th 2025 10:07:32 
  * Modified By: Tony Wiedman
  * -----
  * Copyright (c) 2025 MolexWorks
@@ -100,30 +100,38 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     }
 
     case WM_TIMER:
+    {
         if (g_magnifierMode == MagnifierMode::AttachToMouse)
         {
             POINT pt;
             GetCursorPos(&pt);
             RECT rc;
             GetWindowRect(hWnd, &rc);
-
+    
             if (pt.x != (rc.left + rc.right) / 2 || pt.y != (rc.top + rc.bottom) / 2)
             {
-                SetWindowPos(hWnd, nullptr,
-                             pt.x - (rc.right - rc.left) / 2,
-                             pt.y - (rc.bottom - rc.top) / 2,
-                             0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_ASYNCWINDOWPOS);
+                SetWindowPos(
+                    hWnd,
+                    nullptr,
+                    pt.x - (rc.right - rc.left) / 2,
+                    pt.y - (rc.bottom - rc.top) / 2,
+                    0, 0,
+                    SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE | SWP_ASYNCWINDOWPOS
+                );
             }
         }
+    
         UpdateMagnifier();
         break;
+    }
 
     case WM_LBUTTONDOWN:
+    {
         g_magnifierMode = (GetWindowLong(hWnd, GWL_STYLE) & WS_POPUP)
-                              ? (g_magnifierMode == MagnifierMode::AttachToMouse
-                                     ? MagnifierMode::None
-                                     : MagnifierMode::AttachToMouse)
-                              : g_magnifierMode;
+            ? (g_magnifierMode == MagnifierMode::AttachToMouse
+                ? MagnifierMode::None
+                : MagnifierMode::AttachToMouse)
+            : g_magnifierMode;
 
         if (g_magnifierMode == MagnifierMode::AttachToMouse)
         {
@@ -131,13 +139,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
 
         UpdateMagnifier();
-        break;
-
-    case WM_MOUSEWHEEL:
-    case WM_MOUSEHWHEEL:
-    {
-        g_zoomLevel = ZoomLevel::Default;
-        HandleZoom(wParam);
         break;
     }
 
