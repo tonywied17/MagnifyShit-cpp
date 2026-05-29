@@ -99,7 +99,7 @@ jobs:
     steps:
       - name: Dispatch refresh-badges
         env:
-          GH_TOKEN: ${{ secrets.BADGES_DISPATCH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           gh api -X POST repos/tonywied17/tonywied17/dispatches \
             -f event_type=refresh-badges \
