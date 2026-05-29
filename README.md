@@ -84,7 +84,7 @@ legacy/       Original v1 single-file Win32 magnifier (preserved)
 .github/      CI workflows
 ```
 
-## Screenshots
+## Screenshots (OLD/1.0)
 
 ![Usage Example 1](https://raw.githubusercontent.com/tonywied17/MagnifyShit-cpp/refs/heads/main/legacy/MagnifyShit/Repo%20Assets/use1.png)
 
