@@ -1,7 +1,7 @@
 # MagnifyShit 2.0
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/tonywied17/MagnifyShit-cpp/main/.docs/assets/logo.svg" alt="MagnifyShit 2.0" width="720"/>
+  <img src="https://raw.githubusercontent.com/tonywied17/MagnifyShit-cpp/main/.github/assets/logo.svg" alt="MagnifyShit 2.0" width="720"/>
 </p>
 
 A modern, performant, zero-dependency Windows magnifier. Built with C++20, Direct3D 11, DXGI Desktop Duplication, and Dear ImGui.
@@ -82,7 +82,6 @@ src/
   util/       Geometry, Log, Result, ScopeGuard, ComPtr
 extern/       Vendored dependencies (ImGui, stb, json, doctest)
 legacy/       Original v1 single-file Win32 magnifier (preserved)
-.docs/        Plan, research, progress notes
 .github/      CI workflows
 ```
 
