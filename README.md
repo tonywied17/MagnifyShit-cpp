@@ -6,13 +6,11 @@
 
 A modern, performant, zero-dependency Windows magnifier. Built with C++20, Direct3D 11, DXGI Desktop Duplication, and Dear ImGui.
 
-Originally written as a "bifocal lens" for an oversized monitor; the 2.0 rewrite turns it into a real magnifier with high-quality scaling, accessibility filters, an eyedropper, and screenshot capture.
-
-<a href="../../actions/workflows/build.yml"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-ci-magnify.svg?v=93b9c234" alt="build" /></a>
-<a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-release-magnify.svg?v=904d99ab" alt="release" /></a>
-<a href="../../releases"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-downloads-magnify.svg?v=3d8822f2" alt="downloads" /></a>
-<img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-last-commit-magnify.svg?v=88f4b1f5" alt="last commit" />
-<a href="LICENSE"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-license-magnify.svg?v=5e4a88bb" alt="license" /></a>
+<a href="../../actions/workflows/build.yml"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-ci-magnify.svg" alt="build" /></a>
+<a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-release-magnify.svg" alt="release" /></a>
+<a href="../../releases"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-downloads-magnify.svg" alt="downloads" /></a>
+<img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-last-commit-magnify.svg" alt="last commit" />
+<a href="LICENSE"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-license-magnify.svg" alt="license" /></a>
 
 ## Features
 
