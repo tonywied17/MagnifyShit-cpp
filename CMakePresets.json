@@ -1,0 +1,51 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": { "major": 3, "minor": 24, "patch": 0 },
+    "configurePresets": [
+        {
+            "name": "windows-msvc-base",
+            "hidden": true,
+            "generator": "Visual Studio 17 2022",
+            "architecture": { "value": "x64", "strategy": "set" },
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "windows-msvc-debug",
+            "inherits": "windows-msvc-base",
+            "displayName": "Windows MSVC Debug",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug" }
+        },
+        {
+            "name": "windows-msvc-release",
+            "inherits": "windows-msvc-base",
+            "displayName": "Windows MSVC Release",
+            "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+        },
+        {
+            "name": "windows-msvc-asan",
+            "inherits": "windows-msvc-debug",
+            "displayName": "Windows MSVC Debug + ASan",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS_INIT": "/fsanitize=address"
+            }
+        }
+    ],
+    "buildPresets": [
+        { "name": "windows-msvc-debug", "configurePreset": "windows-msvc-debug", "configuration": "Debug" },
+        { "name": "windows-msvc-release", "configurePreset": "windows-msvc-release", "configuration": "Release" },
+        { "name": "windows-msvc-asan", "configurePreset": "windows-msvc-asan", "configuration": "Debug" }
+    ],
+    "testPresets": [
+        { "name": "windows-msvc-debug",   "configurePreset": "windows-msvc-debug",   "configuration": "Debug",   "output": { "outputOnFailure": true } },
+        { "name": "windows-msvc-release", "configurePreset": "windows-msvc-release", "configuration": "Release", "output": { "outputOnFailure": true } },
+        { "name": "windows-msvc-asan",    "configurePreset": "windows-msvc-asan",    "configuration": "Debug",   "output": { "outputOnFailure": true } }
+    ]
+}
