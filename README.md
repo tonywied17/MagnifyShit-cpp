@@ -8,10 +8,11 @@ A modern, performant, zero-dependency Windows magnifier. Built with C++20, Direc
 
 Originally written as a "bifocal lens" for an oversized monitor; the 2.0 rewrite turns it into a real magnifier with high-quality scaling, accessibility filters, an eyedropper, and screenshot capture.
 
-![GitHub repo size](https://img.shields.io/github/repo-size/tonywied17/MagnifyShit-cpp?style=for-the-badge)
-![GitHub last commit](https://img.shields.io/github/last-commit/tonywied17/MagnifyShit-cpp?style=for-the-badge)
-[![Build](https://img.shields.io/github/actions/workflow/status/tonywied17/MagnifyShit-cpp/build.yml?style=for-the-badge)](../../actions/workflows/build.yml)
-[![Latest release](https://img.shields.io/github/v/release/tonywied17/MagnifyShit-cpp?style=for-the-badge)](../../releases/latest)
+<a href="../../actions/workflows/build.yml"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-ci-magnify.svg" alt="build" /></a>
+<a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-release-magnify.svg" alt="release" /></a>
+<a href="../../releases"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-downloads-magnify.svg" alt="downloads" /></a>
+<img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-last-commit-magnify.svg" alt="last commit" />
+<a href="LICENSE"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-license-magnify.svg" alt="license" /></a>
 
 ## Features
 
