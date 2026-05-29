@@ -90,3 +90,17 @@ jobs:
             MagnifyShit-*-win64.zip
             MagnifyShit-*-win64-debug.zip
           generate_release_notes: true
+
+  notify-badges:
+    name: Refresh profile badges
+    needs: [build]
+    if: github.event_name != 'pull_request' && always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch refresh-badges
+        env:
+          GH_TOKEN: ${{ secrets.BADGES_DISPATCH_TOKEN }}
+        run: |
+          gh api -X POST repos/tonywied17/tonywied17/dispatches \
+            -f event_type=refresh-badges \
+            -f "client_payload[repo]=${{ github.repository }}"

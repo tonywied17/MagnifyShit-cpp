@@ -23,10 +23,29 @@
     <clipPath id="lensClip">
       <circle cx="0" cy="0" r="58"/>
     </clipPath>
+    <linearGradient id="poop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#a3661f"/>
+      <stop offset="55%" stop-color="#7a4515"/>
+      <stop offset="100%" stop-color="#4a2708"/>
+    </linearGradient>
+    <symbol id="poopEmoji" overflow="visible">
+      <!-- stacked swirl body -->
+      <ellipse cx="0" cy="22"  rx="32" ry="11" fill="url(#poop)"/>
+      <ellipse cx="-2" cy="6"  rx="24" ry="10" fill="url(#poop)"/>
+      <ellipse cx="2"  cy="-9" rx="16" ry="9"  fill="url(#poop)"/>
+      <ellipse cx="-1" cy="-21" rx="8"  ry="6"  fill="url(#poop)"/>
+      <!-- highlights -->
+      <ellipse cx="-10" cy="2"  rx="5" ry="2" fill="#c98a3e" opacity="0.7"/>
+      <ellipse cx="-6"  cy="-12" rx="3" ry="1.5" fill="#c98a3e" opacity="0.7"/>
+      <!-- eyes -->
+      <circle cx="-9" cy="8" r="4" fill="#ffffff"/>
+      <circle cx="9"  cy="8" r="4" fill="#ffffff"/>
+      <circle cx="-8" cy="9" r="1.8" fill="#0b1220"/>
+      <circle cx="10" cy="9" r="1.8" fill="#0b1220"/>
+      <!-- smile -->
+      <path d="M-7 17 Q0 23 7 17" fill="none" stroke="#0b1220" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
   </defs>
-
-  <rect width="720" height="220" rx="22" fill="url(#bg)"/>
-  <rect width="720" height="220" rx="22" fill="url(#grid)" opacity="0.55"/>
 
   <!-- title -->
   <g font-family="Segoe UI, Inter, system-ui, sans-serif" font-weight="700">
@@ -42,16 +61,13 @@
       keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite" calcMode="spline"
       keySplines="0.42 0 0.58 1; 0.42 0 0.58 1"/>
 
-    <!-- magnified content (oversized grid + accent pixels) -->
+    <!-- magnified content: the star of the show, magnified poop -->
     <g clip-path="url(#lensClip)">
       <rect x="-80" y="-80" width="160" height="160" fill="#0b1220"/>
       <g transform="scale(2.4)">
         <rect x="-40" y="-40" width="80" height="80" fill="url(#grid)"/>
-        <rect x="-12" y="-6"  width="6" height="6" fill="#f97316"/>
-        <rect x="-6"  y="0"   width="6" height="6" fill="#22d3ee"/>
-        <rect x="0"   y="-12" width="6" height="6" fill="#a78bfa"/>
-        <rect x="6"   y="6"   width="6" height="6" fill="#34d399"/>
       </g>
+      <use href="#poopEmoji" x="0" y="0"/>
       <circle cx="0" cy="0" r="58" fill="url(#glass)"/>
       <!-- specular highlight -->
       <ellipse cx="-18" cy="-22" rx="24" ry="12" fill="#ffffff" opacity="0.28"/>
