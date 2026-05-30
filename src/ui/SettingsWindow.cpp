@@ -227,7 +227,7 @@ void drawHotkeysTab(UiContext& ctx)
  */
 void drawAboutTab()
 {
-    ImGui::Text("MagnifyShit 2.0");
+    ImGui::Text("MagnifyShit 2.1");
     ImGui::TextDisabled("Feature-rich but simple GPU-accelerated desktop magnifier.");
     ImGui::Spacing();
     ImGui::TextWrapped("DXGI Desktop Duplication -> D3D11 fullscreen pass -> Dear ImGui.");

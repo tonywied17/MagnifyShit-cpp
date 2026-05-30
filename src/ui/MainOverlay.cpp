@@ -393,12 +393,12 @@ void MainOverlay::draw(UiContext& ctx)
                           ctx.state.zoom);
             const float ty = dragPos.y + (dragH - ImGui::GetTextLineHeight()) * 0.5f;
             const float tx = gripRight + 10.0f;
-            const float titleW = ImGui::CalcTextSize("MagnifyShit 2.0").x;
+            const float titleW = ImGui::CalcTextSize("MagnifyShit 2.1").x;
             const float statusW = ImGui::CalcTextSize(status).x;
             const float rightLimit = dragEnd.x - 8.0f;
             if (tx + titleW <= rightLimit)
             {
-                dl->AddText(ImVec2(tx, ty), titleCol, "MagnifyShit 2.0");
+                dl->AddText(ImVec2(tx, ty), titleCol, "MagnifyShit 2.1");
                 if (tx + titleW + statusW <= rightLimit)
                 {
                     dl->AddText(ImVec2(tx + titleW, ty), dimCol, status);
@@ -452,7 +452,7 @@ void MainOverlay::draw(UiContext& ctx)
         } // customTitlebar
         else
         {
-            ImGui::TextUnformatted("MagnifyShit 2.0");
+            ImGui::TextUnformatted("MagnifyShit 2.1");
             ImGui::SameLine();
             ImGui::TextDisabled(" | %s  %.2fx", modeLabel(ctx.state.mode), ctx.state.zoom);
             ImGui::SameLine(ImGui::GetWindowWidth() - 28 * scale);

@@ -80,7 +80,7 @@ bool Application::initialize(HINSTANCE hInst, int nCmdShow)
 
     window_ = std::make_unique<platform::WinWindow>();
     if (!window_->create(hInst,
-                         platform::WindowDesc{L"MagnifyShit 2.0", 1400, 820},
+                         platform::WindowDesc{L"MagnifyShit 2.1", 1400, 820},
                          [this](HWND h, UINT m, WPARAM w, LPARAM l, bool& handled) {
                              return handleMessage(h, m, w, l, handled);
                          }))
@@ -743,7 +743,7 @@ void Application::toggleBorderless()
 
 void Application::updateTitle()
 {
-    window_->setTitle(std::format(L"MagnifyShit 2.0 \u2014 {:.2f}x", state_.zoom));
+    window_->setTitle(std::format(L"MagnifyShit 2.1 \u2014 {:.2f}x", state_.zoom));
 }
 
 void Application::takeScreenshot()

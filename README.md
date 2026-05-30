@@ -1,7 +1,7 @@
-# MagnifyShit 2.0
+# MagnifyShit 2.1
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/tonywied17/MagnifyShit-cpp/refs/heads/main/.github/assets/logo.svg" alt="MagnifyShit 2.0" width="720"/>
+  <img src="https://raw.githubusercontent.com/tonywied17/MagnifyShit-cpp/refs/heads/main/.github/assets/logo.svg" alt="MagnifyShit 2.1" width="720"/>
 </p>
 
 Mainly created to emulate a bifocal lense as a borderless window for my one monitor that is too far away because i'm blind. 
