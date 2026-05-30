@@ -4,7 +4,7 @@
   <img src="https://raw.githubusercontent.com/tonywied17/MagnifyShit-cpp/refs/heads/main/.github/assets/logo.svg" alt="MagnifyShit 2.0" width="720"/>
 </p>
 
-A modern, performant, zero-dependency Windows magnifier. Built with C++20, Direct3D 11, DXGI Desktop Duplication, and Dear ImGui.
+Mainly created to emulate a bifocal lense as a borderless window for my one monitor that is too far away because i'm blind. Built with C++20, Direct3D 11, DXGI Desktop Duplication, and Dear ImGui.
 
 <a href="../../actions/workflows/build.yml"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-ci-magnify.svg?v=ef7a239a" alt="build" /></a>
 <a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-release-magnify.svg?v=4a242d3a" alt="release" /></a>
