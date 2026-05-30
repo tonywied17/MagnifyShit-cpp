@@ -6,7 +6,7 @@
 
 Mainly created to emulate a bifocal lense as a borderless window for my one monitor that is too far away because i'm blind. 
 
-<a href="../../actions/workflows/build.yml"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-ci-magnify.svg?v=93b9c234" alt="build" /></a>
+<a href="../../actions/workflows/build.yml"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-ci-magnify.svg?v=ef7a239a" alt="build" /></a>
 <a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-release-magnify.svg?v=9be1eac3" alt="release" /></a>
 <a href="../../releases"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-downloads-magnify.svg?v=9654ebb2" alt="downloads" /></a>
 <img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-last-commit-magnify.svg?v=88f4b1f5" alt="last commit" />
