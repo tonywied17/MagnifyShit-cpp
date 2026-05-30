@@ -6,7 +6,7 @@
 
 A modern, performant, zero-dependency Windows magnifier. Built with C++20, Direct3D 11, DXGI Desktop Duplication, and Dear ImGui.
 
-<a href="../../actions/workflows/build.yml"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-ci-magnify.svg?v=93b9c234" alt="build" /></a>
+<a href="../../actions/workflows/build.yml"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-ci-magnify.svg?v=ef7a239a" alt="build" /></a>
 <a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-release-magnify.svg?v=4a242d3a" alt="release" /></a>
 <a href="../../releases"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-downloads-magnify.svg?v=9654ebb2" alt="downloads" /></a>
 <img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-last-commit-magnify.svg?v=88f4b1f5" alt="last commit" />
