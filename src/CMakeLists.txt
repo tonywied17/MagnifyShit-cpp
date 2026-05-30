@@ -3,6 +3,7 @@ add_executable(MagnifyShit WIN32
     app/Application.cpp
     app/Config.cpp
     app/Hotkeys.cpp
+    app/MagnifyShit.rc
     capture/windows/DxgiDuplication.cpp
     platform/windows/WinPlatform.cpp
     platform/windows/WinWindow.cpp

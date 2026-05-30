@@ -1,0 +1,7 @@
+// Windows resource script: embeds the application icon so it appears
+// in Explorer, the desktop, taskbar, Start menu, and Alt-Tab.
+//
+// The first ICON entry (lowest ID, alphabetically) is what Explorer
+// uses as the executable's icon. Path is resolved relative to this .rc.
+
+IDI_APPICON ICON "../../assets/MagnifyShit.ico"
