@@ -15,6 +15,10 @@ namespace magshit::tools {
 
 namespace {
 
+/**
+ * @brief Build a timestamped PNG filename for a screenshot.
+ * @return Filename in the form `magshit_YYYYMMDD_HHMMSS.png`.
+ */
 std::wstring timestampName()
 {
     using namespace std::chrono;

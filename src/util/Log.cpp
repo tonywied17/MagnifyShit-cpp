@@ -9,6 +9,11 @@ namespace magshit::log {
 
 namespace {
 
+/**
+ * @brief Convert a log level into its fixed text prefix.
+ * @param lvl Severity to render.
+ * @return Static prefix string for the severity.
+ */
 const char* prefix(Level lvl)
 {
     switch (lvl)

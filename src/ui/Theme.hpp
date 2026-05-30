@@ -2,8 +2,7 @@
 
 namespace magshit::ui {
 
-/// User-selected styling. `Auto` tracks the Windows AppsUseLightTheme
-/// setting and resolves to either `Light` or `Dark` at apply time.
+/// @brief User-selected ImGui styling mode.
 enum class ThemeMode
 {
     Light,
@@ -11,23 +10,43 @@ enum class ThemeMode
     Auto,
 };
 
-/// Applies a flat / minimal ImGui style.
+/// @brief Applies the app's flat, minimal ImGui style.
 class Theme
 {
 public:
-    /// Apply `mode` to the current ImGui context.
+    /**
+     * @brief Apply a theme mode to the current ImGui context.
+     * @param mode Requested theme mode; `Auto` resolves from Windows settings.
+     */
     static void apply(ThemeMode mode);
 
-    /// Mode last passed to `apply` (may be `Auto`).
+    /**
+     * @brief Query the requested theme mode.
+     * @return Mode last passed to `apply()`, possibly `Auto`.
+     */
     static ThemeMode current() noexcept { return current_; }
 
-    /// The concrete mode (`Light` or `Dark`) actually in effect, even if
-    /// the user selected `Auto`.
+    /**
+     * @brief Query the concrete theme currently in effect.
+     * @return Resolved mode, always `Light` or `Dark`.
+     */
     static ThemeMode effective() noexcept { return effective_; }
 
 private:
+    /**
+     * @brief Apply the light ImGui palette and sizing values.
+     */
     static void applyLight();
+
+    /**
+     * @brief Apply the dark ImGui palette and sizing values.
+     */
     static void applyDark();
+
+    /**
+     * @brief Read the Windows app-theme preference.
+     * @return true when Windows prefers dark app mode.
+     */
     static bool systemPrefersDark();
 
     static inline ThemeMode current_ = ThemeMode::Light;

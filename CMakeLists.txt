@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24)
 project(MagnifyShit
-    VERSION 2.0.1
+    VERSION 2.1.0
     DESCRIPTION "Modern GPU-accelerated desktop magnifier"
     LANGUAGES CXX
 )

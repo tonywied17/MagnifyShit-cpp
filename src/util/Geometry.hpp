@@ -5,21 +5,21 @@
 
 namespace magshit {
 
-/// 2D integer point.
+/// @brief 2D integer point.
 struct Point
 {
     std::int32_t x = 0;
     std::int32_t y = 0;
 };
 
-/// 2D integer size (width, height).
+/// @brief 2D integer size (width, height).
 struct Size
 {
     std::int32_t w = 0;
     std::int32_t h = 0;
 };
 
-/// 2D integer rectangle (top-left origin + size).
+/// @brief 2D integer rectangle (top-left origin + size).
 struct Rect
 {
     std::int32_t x = 0;
@@ -27,19 +27,31 @@ struct Rect
     std::int32_t w = 0;
     std::int32_t h = 0;
 
-    /// One past the rightmost column.
+    /**
+     * @brief Compute the exclusive right edge.
+     * @return One past the rightmost column.
+     */
     constexpr std::int32_t right() const noexcept { return x + w; }
 
-    /// One past the bottom row.
+    /**
+     * @brief Compute the exclusive bottom edge.
+     * @return One past the bottom row.
+     */
     constexpr std::int32_t bottom() const noexcept { return y + h; }
 
-    /// Center point of the rectangle (integer rounding).
+    /**
+     * @brief Compute the rectangle center using integer rounding.
+     * @return Center point in the same coordinate space as the rectangle.
+     */
     constexpr Point center() const noexcept { return {x + w / 2, y + h / 2}; }
 };
 
-/// Shrink `r` to fit inside `bounds` (width/height clamped, then position
-/// clamped). The returned rect is always fully contained in `bounds`
-/// assuming `bounds` has positive area.
+/**
+ * @brief Clamp a rectangle so it fits fully inside another rectangle.
+ * @param r Rectangle to clamp; width and height may be reduced.
+ * @param bounds Container rectangle with positive area.
+ * @return Adjusted rectangle fully contained in `bounds`.
+ */
 inline Rect clampToBounds(Rect r, Rect bounds) noexcept
 {
     r.w = std::min(r.w, bounds.w);

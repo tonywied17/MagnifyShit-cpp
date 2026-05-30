@@ -5,7 +5,7 @@
 
 namespace magshit::log {
 
-/// Severity for a single log line.
+/// @brief Severity for a single log line.
 enum class Level
 {
     Trace,
@@ -14,32 +14,55 @@ enum class Level
     Error
 };
 
-/// Write a pre-formatted message at `level` to the debug output and (in
-/// Debug builds) stderr.
+/**
+ * @brief Write a pre-formatted log message.
+ * @param level Severity for the log line.
+ * @param message Message text written to debug output and, in Debug builds, stderr.
+ */
 void write(Level level, std::string_view message);
 
-/// std::format-style helper for `Level::Info`.
+/**
+ * @brief Format and write an informational log message.
+ * @tparam Args Format argument types.
+ * @param fmt Compile-time checked `std::format` string.
+ * @param args Values consumed by `fmt`.
+ */
 template <typename... Args>
 inline void info(std::format_string<Args...> fmt, Args&&... args)
 {
     write(Level::Info, std::format(fmt, std::forward<Args>(args)...));
 }
 
-/// std::format-style helper for `Level::Warn`.
+/**
+ * @brief Format and write a warning log message.
+ * @tparam Args Format argument types.
+ * @param fmt Compile-time checked `std::format` string.
+ * @param args Values consumed by `fmt`.
+ */
 template <typename... Args>
 inline void warn(std::format_string<Args...> fmt, Args&&... args)
 {
     write(Level::Warn, std::format(fmt, std::forward<Args>(args)...));
 }
 
-/// std::format-style helper for `Level::Error`.
+/**
+ * @brief Format and write an error log message.
+ * @tparam Args Format argument types.
+ * @param fmt Compile-time checked `std::format` string.
+ * @param args Values consumed by `fmt`.
+ */
 template <typename... Args>
 inline void error(std::format_string<Args...> fmt, Args&&... args)
 {
     write(Level::Error, std::format(fmt, std::forward<Args>(args)...));
 }
 
-/// std::format-style helper for `Level::Trace`.
+/**
+ * @brief Format and write a trace log message.
+ * @tparam Args Format argument types.
+ * @param fmt Compile-time checked `std::format` string.
+ * @param args Values consumed by `fmt`.
+ */
 template <typename... Args>
 inline void trace(std::format_string<Args...> fmt, Args&&... args)
 {

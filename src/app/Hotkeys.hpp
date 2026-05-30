@@ -8,7 +8,7 @@
 
 namespace magshit::app {
 
-/// Every user-triggerable action that can be bound to one or more inputs.
+/// @brief Every user-triggerable action that can be bound to one or more inputs.
 enum class HotkeyAction : std::uint8_t
 {
     ToggleOverlay,
@@ -29,7 +29,7 @@ enum class HotkeyAction : std::uint8_t
     _Count,
 };
 
-/// Modifier-key bitmask used by `HotkeyBinding`.
+/// @brief Modifier-key bitmask used by `HotkeyBinding`.
 enum ModBits : std::uint8_t
 {
     Mod_None  = 0,
@@ -39,7 +39,7 @@ enum ModBits : std::uint8_t
     Mod_Win   = 1 << 3,
 };
 
-/// Trigger type for a binding. Wheel bindings fire on `WM_MOUSEWHEEL`.
+/// @brief Trigger type for a binding. Wheel bindings fire on `WM_MOUSEWHEEL`.
 enum class HotkeyTrigger : std::uint8_t
 {
     Key       = 0,
@@ -47,7 +47,7 @@ enum class HotkeyTrigger : std::uint8_t
     WheelDown = 2,
 };
 
-/// One way to invoke an action.
+/// @brief One way to invoke an action.
 struct HotkeyBinding
 {
     std::uint8_t mods = 0;          // bitwise OR of `ModBits`
@@ -55,24 +55,35 @@ struct HotkeyBinding
     std::uint16_t vk = 0;           // Virtual-key code when `trigger == Key`
 };
 
-/// Full action -> bindings table.
+/// @brief Full action-to-bindings table.
 struct HotkeyMap
 {
     std::vector<HotkeyBinding> bindings[static_cast<size_t>(HotkeyAction::_Count)];
 
-    /// Built-in default bindings.
+    /**
+     * @brief Build the built-in default bindings table.
+     * @return HotkeyMap populated with default shortcuts.
+     */
     static HotkeyMap defaults();
 
-    /// Find which action (if any) matches the given keyboard input.
-    /// Returns `HotkeyAction::_Count` if none.
+    /**
+     * @brief Find the action matching a keyboard input.
+     * @param mods Modifier bitmask using `ModBits`.
+     * @param vk Win32 virtual-key code.
+     * @return Matching action, or `HotkeyAction::_Count` when no binding matches.
+     */
     HotkeyAction matchKey(std::uint8_t mods, std::uint16_t vk) const;
 
-    /// Find which action (if any) matches the given wheel input. `delta`
-    /// follows Win32 conventions (positive = wheel-up).
+    /**
+     * @brief Find the action matching a mouse-wheel input.
+     * @param mods Modifier bitmask using `ModBits`.
+     * @param delta Win32 wheel delta; positive values mean wheel-up.
+     * @return Matching action, or `HotkeyAction::_Count` when no binding matches.
+     */
     HotkeyAction matchWheel(std::uint8_t mods, int delta) const;
 };
 
-/// Per-action metadata for UI labels and global-registration policy.
+/// @brief Per-action metadata for UI labels and global-registration policy.
 struct HotkeyActionInfo
 {
     HotkeyAction action;
@@ -83,19 +94,38 @@ struct HotkeyActionInfo
     bool allowWheel;        // accept mouse-wheel bindings
 };
 
-/// All actions in display order.
+/**
+ * @brief Enumerate hotkey actions in UI display order.
+ * @return Immutable action metadata table.
+ */
 const std::vector<HotkeyActionInfo>& hotkeyActionInfos();
 
-/// Look up metadata for one action.
+/**
+ * @brief Look up metadata for one action.
+ * @param a Action to inspect.
+ * @return Metadata for `a`, or a sentinel entry for invalid actions.
+ */
 const HotkeyActionInfo& hotkeyActionInfo(HotkeyAction a);
 
-/// Bit-mask of currently held modifiers (uses Win32 `GetKeyState`).
+/**
+ * @brief Read currently held keyboard modifiers.
+ * @return Modifier bitmask using `ModBits`, queried via Win32 `GetKeyState`.
+ */
 std::uint8_t currentModifierMask();
 
-/// Render a binding as `Ctrl+Shift+Wheel Up`-style text.
+/**
+ * @brief Render a binding as `Ctrl+Shift+Wheel Up`-style text.
+ * @param b Binding to format.
+ * @return Human-readable shortcut label.
+ */
 std::string bindingToString(const HotkeyBinding& b);
 
-/// True when `a` and `b` represent the same input.
+/**
+ * @brief Compare two bindings by their input identity.
+ * @param a First binding.
+ * @param b Second binding.
+ * @return true when both bindings represent the same trigger, modifiers, and key.
+ */
 bool bindingEquals(const HotkeyBinding& a, const HotkeyBinding& b);
 
 } // namespace magshit::app

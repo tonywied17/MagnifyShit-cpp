@@ -7,11 +7,22 @@ namespace magshit::ui {
 
 namespace {
 
+/**
+ * @brief Convert integer sRGB components to an ImGui color.
+ * @param r Red channel in 0..255.
+ * @param g Green channel in 0..255.
+ * @param b Blue channel in 0..255.
+ * @param a Alpha channel in 0..1.
+ * @return ImGui RGBA color with normalized channels.
+ */
 ImVec4 rgb(int r, int g, int b, float a = 1.0f)
 {
     return ImVec4(r / 255.0f, g / 255.0f, b / 255.0f, a);
 }
 
+/**
+ * @brief Apply ImGui spacing, rounding, and border defaults shared by themes.
+ */
 void applyCommonStyle()
 {
     ImGuiStyle& s = ImGui::GetStyle();
