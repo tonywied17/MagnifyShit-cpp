@@ -8,7 +8,7 @@ Mainly created to emulate a bifocal lense as a borderless window for my one moni
 
 <a href="../../actions/workflows/build.yml"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-ci-magnify.svg?v=ef7a239a" alt="build" /></a>
 <a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-release-magnify.svg?v=9be1eac3" alt="release" /></a>
-<a href="../../releases"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-downloads-magnify.svg?v=605c3be1" alt="downloads" /></a>
+<a href="../../releases"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-downloads-magnify.svg?v=aca150d5" alt="downloads" /></a>
 <img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-last-commit-magnify.svg?v=88f4b1f5" alt="last commit" />
 <a href="LICENSE"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-license-magnify.svg?v=5e4a88bb" alt="license" /></a>
 
