@@ -7,8 +7,7 @@
 
 namespace magshit::ui {
 
-/// References to the live application objects the ImGui panels need to
-/// read or mutate during a frame.
+/// @brief References to live objects the ImGui panels need during a frame.
 struct UiContext
 {
     app::AppState& state;

@@ -65,6 +65,10 @@ struct AppState
     ui::ThemeMode themeMode = ui::ThemeMode::Auto;
     std::string lastScreenshotPath;
 
+    // Transient (not persisted) toast banner shown briefly in the overlay.
+    std::string toastText;
+    double toastUntilTime = 0.0;
+
     /// Action -> bindings table. Persisted via Config.
     HotkeyMap hotkeys = HotkeyMap::defaults();
 };
@@ -86,75 +90,137 @@ struct HotkeyCapture
 class Application
 {
 public:
+
+    /**
+     * @brief Construct a new Application object.
+     */
     Application();
+
+    /**
+     * @brief Destroy the Application object and shut down subsystems.
+     */
     ~Application();
 
-    /// Entry point: initialize subsystems, run the message/render loop, and
-    /// shut down. Returns the process exit code.
+    /**
+     * @brief Entry point: initialize subsystems, run the message/render loop, and shut down.
+     * @param hInst The Win32 instance handle.
+     * @param nCmdShow The window show command.
+     * @return int The process exit code.
+     */
     int run(HINSTANCE hInst, int nCmdShow);
 
 private:
-    /// Construct subsystems and show the main window. Returns false on a
-    /// fatal init failure.
+
+    /**
+     * @brief Construct subsystems and show the main window.
+     * @param hInst The Win32 instance handle.
+     * @param nCmdShow The window show command.
+     * @return true on success, false on fatal init failure.
+     */
     bool initialize(HINSTANCE hInst, int nCmdShow);
 
-    /// Tear down subsystems in reverse order and persist user state.
+    /**
+     * @brief Tear down subsystems in reverse order and persist user state.
+     */
     void shutdown();
 
-    /// Render one frame: acquire capture, draw magnified output, draw UI.
+    /**
+     * @brief Render one frame: acquire capture, draw magnified output, draw UI.
+     */
     void frame();
 
-    /// Build and submit the ImGui frame for the overlay and settings panels.
+    /**
+     * @brief Build and submit the ImGui frame for the overlay and settings panels.
+     */
     void renderUi();
 
-    /// In Attach mode, move the window so it tracks the cursor each frame.
+    /**
+     * @brief In Attach mode, move the window so it tracks the cursor each frame.
+     */
     void updateAttachedWindowPosition();
 
-    /// Window procedure dispatch. Sets `handled = true` and returns the
-    /// result if the message was consumed; otherwise leaves it for default.
-    LRESULT handleMessage(HWND, UINT, WPARAM, LPARAM, bool& handled);
+    /**
+     * @brief Window procedure dispatch.
+     * @param hwnd The window handle.
+     * @param msg The message.
+     * @param wParam WPARAM.
+     * @param lParam LPARAM.
+     * @param handled Set to true if the message was consumed.
+     * @return LRESULT The result if handled, otherwise 0.
+     */
+    LRESULT handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam, bool& handled);
 
-    /// Apply a virtual-key shortcut from WM_KEYDOWN.
+    /**
+     * @brief Apply a virtual-key shortcut from WM_KEYDOWN.
+     * @param key The virtual key code.
+     */
     void onKeyDown(WPARAM key);
 
-    /// Zoom in/out by one wheel notch.
+    /**
+     * @brief Zoom in/out by one wheel notch.
+     * @param delta The wheel delta.
+     */
     void onWheel(short delta);
 
-    /// Hook for primary-button activation (currently a no-op stub).
+    /**
+     * @brief Hook for primary-button activation (currently a no-op stub).
+     */
     void onLeftClick();
 
-    /// Multiplicatively change zoom and clamp to [zoomMin, zoomMax].
+    /**
+     * @brief Multiplicatively change zoom and clamp to [zoomMin, zoomMax].
+     * @param delta The zoom delta.
+     */
     void adjustZoom(float delta);
 
-    /// Reset zoom to the default level.
+    /**
+     * @brief Reset zoom to the default level.
+     */
     void resetZoom();
 
-    /// Cycle to the next MagnifierMode.
+    /**
+     * @brief Cycle to the next MagnifierMode.
+     */
     void cycleMode();
 
-    /// Toggle borderless / standard-frame window styles.
+    /**
+     * @brief Toggle borderless / standard-frame window styles.
+     */
     void toggleBorderless();
 
-    /// Refresh the title bar text from current state.
+    /**
+     * @brief Refresh the title bar text from current state.
+     */
     void updateTitle();
 
-    /// Save a PNG of the current viewport to the screenshots directory.
+    /**
+     * @brief Save a PNG of the current viewport to the screenshots directory.
+     */
     void takeScreenshot();
 
-    /// Map a client-area point to the desktop pixel currently displayed
-    /// there (zoom + mode aware) and post the message to whatever window
-    /// owns that pixel. Returns true if the event was forwarded.
+    /**
+     * @brief Map a client-area point to the desktop pixel currently displayed there (zoom + mode aware) and post the message to whatever window owns that pixel.
+     * @param clientPt The client-area point.
+     * @param msg The mouse message.
+     * @param wParam WPARAM.
+     * @return true if the event was forwarded, false otherwise.
+     */
     bool forwardMouseEvent(POINT clientPt, UINT msg, WPARAM wParam);
 
-    /// Sample the desktop pixel under the cursor and copy its hex
-    /// (#RRGGBB) to the clipboard. Invoked by the Ctrl+Shift+C hotkey.
+    /**
+     * @brief Sample the desktop pixel under the cursor and copy its hex (#RRGGBB) to the clipboard. Invoked by the Ctrl+Shift+C hotkey.
+     */
     void copyHexAtCursor();
 
-    /// Dispatch a single `HotkeyAction` to its concrete handler.
+    /**
+     * @brief Dispatch a single HotkeyAction to its concrete handler.
+     * @param action The hotkey action.
+     */
     void runAction(HotkeyAction action);
 
-    /// Re-register all `global` actions with the OS (clears any previous
-    /// registration). Called at startup and after a rebind.
+    /**
+     * @brief Re-register all global actions with the OS (clears any previous registration). Called at startup and after a rebind.
+     */
     void rebindGlobalHotkeys();
 
     std::unique_ptr<platform::WinWindow> window_;

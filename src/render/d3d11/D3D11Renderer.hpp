@@ -12,7 +12,7 @@
 
 namespace magshit::render {
 
-/// Up-sampling filter used to draw the magnified frame.
+/// @brief Up-sampling filter used to draw the magnified frame.
 enum class Scaling : std::uint32_t
 {
     Nearest = 0,
@@ -22,14 +22,14 @@ enum class Scaling : std::uint32_t
     _Count
 };
 
-/// Bitmask used in `DrawParams::colorFlags`.
+/// @brief Bitmask used in `DrawParams::colorFlags`.
 enum ColorFilterBits : std::uint32_t
 {
     Filter_Invert    = 1u << 0,
     Filter_Grayscale = 1u << 1,
 };
 
-/// Color-vision-deficiency simulation matrix selector.
+/// @brief Color-vision-deficiency simulation matrix selector.
 enum class CvdMode : std::uint32_t
 {
     None = 0,
@@ -38,7 +38,7 @@ enum class CvdMode : std::uint32_t
     Tritanopia = 3,
 };
 
-/// Per-frame inputs to `D3D11Renderer::drawMagnified`.
+/// @brief Per-frame inputs to `D3D11Renderer::drawMagnified`.
 struct DrawParams
 {
     float uvX = 0.0f;
@@ -55,55 +55,116 @@ struct DrawParams
     float zoom = 1.0f;
 };
 
-/// Owns the D3D11 device, swap chain, and shader pipeline. Draws a single
-/// magnified quad per frame on top of a cleared back buffer.
+/// @brief Owns the D3D11 device, swap chain, and shader pipeline.
 class D3D11Renderer
 {
 public:
+    /**
+     * @brief Construct an uninitialized renderer.
+     */
     D3D11Renderer() = default;
+
+    /**
+     * @brief Release all D3D resources owned by the renderer.
+     */
     ~D3D11Renderer();
 
     D3D11Renderer(const D3D11Renderer&) = delete;
     D3D11Renderer& operator=(const D3D11Renderer&) = delete;
 
-    /// Create device, swap chain, and pipeline state for `hwnd`. Returns
-    /// false on a fatal D3D failure.
+    /**
+     * @brief Create the device, swap chain, and pipeline state for a window.
+     * @param hwnd Target window receiving swap-chain presentation.
+     * @return true on success, false on a fatal D3D initialization failure.
+     */
     bool init(HWND hwnd);
 
-    /// Resize the swap chain back buffer to `w` x `h` pixels.
+    /**
+     * @brief Resize the swap-chain back buffer.
+     * @param w New width in pixels.
+     * @param h New height in pixels.
+     */
     void resize(std::uint32_t w, std::uint32_t h);
 
-    /// Clear the back buffer to `clearColor` and bind it as the render
-    /// target. Call once at the top of each frame.
+    /**
+     * @brief Clear and bind the current back buffer for drawing.
+     * @param clearColor RGBA clear color.
+     */
     void beginFrame(const float clearColor[4]);
 
-    /// Draw the source SRV as a magnified, filtered quad over the back
-    /// buffer using `p`.
+    /**
+     * @brief Draw a magnified, filtered fullscreen quad from a source texture.
+     * @param srv Source shader-resource view to sample.
+     * @param sourceTexSize Dimensions of `srv` in texels.
+     * @param p Per-frame draw parameters and filter controls.
+     */
     void drawMagnified(ID3D11ShaderResourceView* srv, Size sourceTexSize, const DrawParams& p);
 
-    /// Submit the frame. `vsync = true` waits for the next VBlank.
+    /**
+     * @brief Present the current swap-chain back buffer.
+     * @param vsync When true, wait for the next VBlank before returning.
+     */
     void present(bool vsync);
 
-    /// Underlying D3D11 device (never null after a successful `init`).
+    /**
+     * @brief Access the D3D11 device.
+     * @return Underlying device; never null after successful `init()`.
+     */
     ID3D11Device* device() const noexcept { return device_.Get(); }
 
-    /// Immediate context.
+    /**
+     * @brief Access the immediate D3D11 context.
+     * @return Immediate context; never null after successful `init()`.
+     */
     ID3D11DeviceContext* context() const noexcept { return context_.Get(); }
 
-    /// Owned swap chain.
+    /**
+     * @brief Access the owned swap chain.
+     * @return Swap chain; never null after successful `init()`.
+     */
     IDXGISwapChain1* swapChain() const noexcept { return swapChain_.Get(); }
 
-    /// Render-target view for the current back buffer.
+    /**
+     * @brief Access the render-target view for the current back buffer.
+     * @return Back-buffer render-target view, or null before initialization.
+     */
     ID3D11RenderTargetView* backBufferRTV() const noexcept { return rtv_.Get(); }
 
-    /// Back buffer size in pixels.
+    /**
+     * @brief Query the current back-buffer size.
+     * @return Back-buffer dimensions in pixels.
+     */
     Size backBufferSize() const noexcept { return backSize_; }
 
 private:
+    /**
+     * @brief Create the D3D11 device and immediate context.
+     * @return true on success, false on D3D failure.
+     */
     bool createDevice();
+
+    /**
+     * @brief Create the swap chain bound to a window.
+     * @param hwnd Target presentation window.
+     * @return true on success, false on DXGI failure.
+     */
     bool createSwapChain(HWND hwnd);
+
+    /**
+     * @brief Compile shaders and create immutable pipeline state.
+     * @return true on success, false on D3D shader or state creation failure.
+     */
     bool createPipeline();
+
+    /**
+     * @brief Create a render-target view for the current swap-chain back buffer.
+     * @return true on success, false on D3D failure.
+     */
     bool createRTV();
+
+    /**
+     * @brief Release the current back-buffer render-target view.
+     */
     void releaseRTV();
 
     ComPtr<ID3D11Device> device_;

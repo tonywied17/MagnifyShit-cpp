@@ -4,12 +4,14 @@
 
 namespace magshit::ui {
 
-/// The always-on-screen control panel: zoom slider, mode dropdown, window
-/// flags, eyedropper read-out, and the shortcuts cheat-sheet.
+/// @brief Draws the always-on-screen magnifier control panel.
 class MainOverlay
 {
 public:
-    /// Build the overlay window for the current frame.
+    /**
+     * @brief Build the overlay window for the current frame.
+     * @param ctx Live UI context used to read and mutate application state.
+     */
     void draw(UiContext& ctx);
 };
 

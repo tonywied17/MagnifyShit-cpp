@@ -4,13 +4,18 @@
 
 namespace magshit::ui {
 
-/// Tabbed settings dialog (General, Filters, Appearance, Hotkeys, About).
-/// Shown only when `AppState::showSettings` is true.
+/// @brief Draws the tabbed settings dialog.
 class SettingsWindow
 {
 public:
-    /// Build the settings window for the current frame.
+    /**
+     * @brief Build the settings window for the current frame when visible.
+     * @param ctx Live UI context used to read and mutate application state.
+     */
     void draw(UiContext& ctx);
+
+private:
+    bool wasShown_ = false;
 };
 
 } // namespace magshit::ui

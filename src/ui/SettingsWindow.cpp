@@ -4,16 +4,22 @@
 #include "../app/Hotkeys.hpp"
 
 #include <imgui.h>
+#include <imgui_internal.h>
 
 #include <Windows.h>
 #include <shellapi.h>
 
+#include <algorithm>
 #include <cstdio>
 
 namespace magshit::ui {
 
 namespace {
 
+/**
+ * @brief Draw the settings tab for zoom, grid, and window behavior.
+ * @param ctx Live UI context used to read and mutate application state.
+ */
 void drawGeneralTab(UiContext& ctx)
 {
     ImGui::SliderFloat("Min zoom", &ctx.state.zoomMin, 1.0f, 4.0f, "%.2fx");
@@ -55,6 +61,10 @@ void drawGeneralTab(UiContext& ctx)
     ImGui::Checkbox("Freeze capture", &ctx.state.freeze);
 }
 
+/**
+ * @brief Draw the settings tab for color filters and CVD simulation.
+ * @param ctx Live UI context used to read and mutate filter state.
+ */
 void drawFiltersTab(UiContext& ctx)
 {
     ImGui::TextDisabled("Color");
@@ -86,6 +96,10 @@ void drawFiltersTab(UiContext& ctx)
     }
 }
 
+/**
+ * @brief Draw the settings tab for theme and overlay visibility.
+ * @param ctx Live UI context used to read and mutate appearance state.
+ */
 void drawAppearanceTab(UiContext& ctx)
 {
     const char* themes[] = {"Light", "Dark", "Auto (follow Windows)"};
@@ -103,6 +117,10 @@ void drawAppearanceTab(UiContext& ctx)
     ImGui::Checkbox("Show overlay panel", &ctx.state.showOverlay);
 }
 
+/**
+ * @brief Draw the settings tab for hotkey inspection and rebinding.
+ * @param ctx Live UI context carrying hotkey map and capture state.
+ */
 void drawHotkeysTab(UiContext& ctx)
 {
     using namespace app;
@@ -133,18 +151,17 @@ void drawHotkeysTab(UiContext& ctx)
         map = HotkeyMap::defaults();
         if (ctx.hotkeyGlobalsDirty) *ctx.hotkeyGlobalsDirty = true;
     }
-    ImGui::SameLine();
     ImGui::TextDisabled("Click \"+ Add\" then press the desired key, modifiers, or Ctrl+wheel. Esc cancels.");
 
     if (!ImGui::BeginTable(
             "hk", 2,
             ImGuiTableFlags_BordersInnerH | ImGuiTableFlags_RowBg |
-                ImGuiTableFlags_SizingStretchProp))
+                ImGuiTableFlags_SizingFixedFit))
     {
         return;
     }
-    ImGui::TableSetupColumn("Action", ImGuiTableColumnFlags_WidthStretch, 0.45f);
-    ImGui::TableSetupColumn("Bindings", ImGuiTableColumnFlags_WidthStretch, 0.55f);
+    ImGui::TableSetupColumn("Action", ImGuiTableColumnFlags_WidthFixed, 260.0f);
+    ImGui::TableSetupColumn("Bindings", ImGuiTableColumnFlags_WidthStretch, 0.0f);
     ImGui::TableHeadersRow();
 
     for (const auto& info : hotkeyActionInfos())
@@ -205,10 +222,13 @@ void drawHotkeysTab(UiContext& ctx)
     ImGui::EndTable();
 }
 
+/**
+ * @brief Draw the settings tab with version, dependency, and source details.
+ */
 void drawAboutTab()
 {
     ImGui::Text("MagnifyShit 2.0");
-    ImGui::TextDisabled("A modern GPU-accelerated desktop magnifier.");
+    ImGui::TextDisabled("Feature-rich but simple GPU-accelerated desktop magnifier.");
     ImGui::Spacing();
     ImGui::TextWrapped("DXGI Desktop Duplication -> D3D11 fullscreen pass -> Dear ImGui.");
     ImGui::Spacing();
@@ -247,10 +267,26 @@ void SettingsWindow::draw(UiContext& ctx)
 {
     if (!ctx.state.showSettings)
     {
+        wasShown_ = false;
         return;
     }
 
-    ImGui::SetNextWindowSize(ImVec2(780, 520), ImGuiCond_FirstUseEver);
+    const Size cs = ctx.window.clientSize();
+    ImVec2 size(780, 520);
+    if (size.x > cs.w - 40) size.x = std::max(320.0f, static_cast<float>(cs.w) - 40);
+    if (size.y > cs.h - 40) size.y = std::max(240.0f, static_cast<float>(cs.h) - 40);
+
+    // Every time Settings is reopened, snap it back to a centered default so a
+    // window that was dragged out of view can be recovered by toggling it off
+    // and on from the overlay button (or the hotkey).
+    if (!wasShown_)
+    {
+        ImGui::SetNextWindowPos(ImVec2(cs.w * 0.5f, cs.h * 0.5f),
+                                ImGuiCond_Always, ImVec2(0.5f, 0.5f));
+        ImGui::SetNextWindowSize(size, ImGuiCond_Always);
+    }
+    wasShown_ = true;
+
     if (ImGui::Begin("Settings", &ctx.state.showSettings))
     {
         if (ImGui::BeginTabBar("settings_tabs"))

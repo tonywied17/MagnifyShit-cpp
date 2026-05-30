@@ -23,6 +23,14 @@ struct alignas(16) ShaderCB
     float zoom;
 };
 
+/**
+ * @brief Compile an HLSL shader blob.
+ * @param hlsl Null-terminated shader source.
+ * @param entry Entry-point function name.
+ * @param target Shader model target such as `vs_5_0` or `ps_5_0`.
+ * @param defines Optional macro definitions passed to D3DCompile.
+ * @return Compiled blob on success, or null on compilation failure.
+ */
 ComPtr<ID3DBlob> compile(const char* hlsl,
                          const char* entry,
                          const char* target,
@@ -55,6 +63,11 @@ ComPtr<ID3DBlob> compile(const char* hlsl,
     return blob;
 }
 
+/**
+ * @brief Resolve the HLSL macro used for a scaling variant.
+ * @param s Scaling mode to compile/select.
+ * @return Macro name passed to the pixel-shader compiler.
+ */
 const char* variantDefine(Scaling s)
 {
     switch (s)

@@ -13,16 +13,32 @@ constexpr std::uint16_t VK_OEM_PLUS_K  = VK_OEM_PLUS;
 constexpr std::uint16_t VK_OEM_MINUS_K = VK_OEM_MINUS;
 constexpr std::uint16_t VK_OEM_COMMA_K = VK_OEM_COMMA;
 
+/**
+ * @brief Construct a keyboard hotkey binding.
+ * @param mods Modifier bitmask using `ModBits`.
+ * @param vk Win32 virtual-key code.
+ * @return Hotkey binding for a key trigger.
+ */
 HotkeyBinding key(std::uint8_t mods, std::uint16_t vk)
 {
     return HotkeyBinding{mods, HotkeyTrigger::Key, vk};
 }
 
+/**
+ * @brief Construct a wheel-up hotkey binding.
+ * @param mods Modifier bitmask using `ModBits`.
+ * @return Hotkey binding for a wheel-up trigger.
+ */
 HotkeyBinding wheelUp(std::uint8_t mods)
 {
     return HotkeyBinding{mods, HotkeyTrigger::WheelUp, 0};
 }
 
+/**
+ * @brief Construct a wheel-down hotkey binding.
+ * @param mods Modifier bitmask using `ModBits`.
+ * @return Hotkey binding for a wheel-down trigger.
+ */
 HotkeyBinding wheelDown(std::uint8_t mods)
 {
     return HotkeyBinding{mods, HotkeyTrigger::WheelDown, 0};
@@ -124,6 +140,11 @@ std::uint8_t currentModifierMask()
     return m;
 }
 
+/**
+ * @brief Convert a Win32 virtual-key code into a short UI label.
+ * @param vk Virtual-key code to format.
+ * @return Friendly key name, or a `VK 0xNN` fallback.
+ */
 static std::string vkName(std::uint16_t vk)
 {
     switch (vk)

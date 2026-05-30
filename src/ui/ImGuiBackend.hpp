@@ -9,44 +9,79 @@ struct ID3D11DeviceContext;
 
 namespace magshit::ui {
 
-/// Owns the ImGui context plus the Win32 + DX11 platform/render backends
-/// and handles font rebuilds on DPI changes.
+/// @brief Owns the ImGui context and Win32/DX11 backend bindings.
 class ImGuiBackend
 {
 public:
+    /**
+     * @brief Construct an uninitialized ImGui backend.
+     */
     ImGuiBackend() = default;
+
+    /**
+     * @brief Shut down ImGui if it is still initialized.
+     */
     ~ImGuiBackend();
 
     ImGuiBackend(const ImGuiBackend&) = delete;
     ImGuiBackend& operator=(const ImGuiBackend&) = delete;
 
-    /// Initialise ImGui against the given window/device. Returns false on
-    /// failure (already-initialised state will be torn down).
+    /**
+     * @brief Initialize ImGui for a Win32 window and D3D11 device/context.
+     * @param hwnd Window handle used by the Win32 backend.
+     * @param device D3D11 device used by the DX11 backend.
+     * @param context Immediate D3D11 context used by the DX11 backend.
+     * @return true on success; false tears down any partial initialization.
+     */
     bool init(HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* context);
 
-    /// Tear down ImGui and both backends. Idempotent.
+    /**
+     * @brief Tear down ImGui and both platform/render backends.
+     */
     void shutdown();
 
-    /// Start a new ImGui frame.
+    /**
+     * @brief Start a new ImGui frame.
+     */
     void beginFrame();
 
-    /// Render the queued draw data and present it through the DX11 backend.
+    /**
+     * @brief Render queued ImGui draw data through the DX11 backend.
+     */
     void endFrame();
 
-    /// Forward a Win32 message to `ImGui_ImplWin32_WndProcHandler`. Returns
-    /// true if the message was consumed by ImGui.
+    /**
+     * @brief Forward a Win32 message to ImGui.
+     * @param hwnd Window receiving the message.
+     * @param msg Win32 message identifier.
+     * @param wParam Message WPARAM.
+     * @param lParam Message LPARAM.
+     * @return true when ImGui consumed the message.
+     */
     bool handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-    /// Rebuild the font atlas at the given DPI scale (1.0 = 96 dpi).
+    /**
+     * @brief Rebuild the font atlas for a DPI scale.
+     * @param dpiScale Scale relative to 96 DPI.
+     */
     void rebuildFonts(float dpiScale);
 
-    /// Switch between light/dark/auto styling.
+    /**
+     * @brief Switch between light, dark, and auto styling.
+     * @param mode Requested theme mode.
+     */
     void setThemeMode(ThemeMode mode);
 
-    /// Current theme mode (the user's choice, may be `Auto`).
+    /**
+     * @brief Query the requested theme mode.
+     * @return User-selected theme mode; may be `Auto`.
+     */
     ThemeMode themeMode() const noexcept { return themeMode_; }
 
-    /// True once `init` has succeeded.
+    /**
+     * @brief Check whether ImGui is initialized.
+     * @return true once `init()` has succeeded and before `shutdown()`.
+     */
     bool ready() const noexcept { return ready_; }
 
 private:

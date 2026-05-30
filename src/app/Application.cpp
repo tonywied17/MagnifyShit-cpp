@@ -25,6 +25,11 @@ namespace {
 constexpr UINT_PTR kDragRedrawTimer = 1;
 constexpr int     kHotkeyBaseId     = 0x4000;
 
+/**
+ * @brief Convert the app's modifier bitmask to Win32 hotkey flags.
+ * @param mods Modifier bitmask using `ModBits`.
+ * @return Win32 `MOD_*` flag mask including `MOD_NOREPEAT`.
+ */
 UINT modsToWin32(std::uint8_t mods)
 {
     UINT m = MOD_NOREPEAT;
@@ -545,6 +550,7 @@ void Application::runAction(HotkeyAction action)
     case HotkeyAction::AttachToggle:
         state_.mode = (state_.mode == MagnifierMode::AttachToMouse) ? MagnifierMode::Static
                                                                     : MagnifierMode::AttachToMouse;
+        if (state_.mode == MagnifierMode::AttachToMouse) state_.showOverlay = false;
         break;
     case HotkeyAction::AlwaysOnTopToggle:
         state_.alwaysOnTop = !state_.alwaysOnTop;
@@ -677,6 +683,7 @@ void Application::copyHexAtCursor()
     std::snprintf(hex, sizeof(hex), "#%02X%02X%02X",
                   picked->r, picked->g, picked->b);
 
+    bool copied = false;
     if (OpenClipboard(window_->handle()))
     {
         EmptyClipboard();
@@ -687,7 +694,7 @@ void Application::copyHexAtCursor()
             {
                 std::memcpy(p, hex, bytes);
                 GlobalUnlock(h);
-                SetClipboardData(CF_TEXT, h);
+                if (SetClipboardData(CF_TEXT, h)) copied = true;
             }
             else
             {
@@ -695,6 +702,12 @@ void Application::copyHexAtCursor()
             }
         }
         CloseClipboard();
+    }
+
+    if (copied)
+    {
+        state_.toastText = std::string("Copied ") + hex;
+        state_.toastUntilTime = ImGui::GetTime() + 1.8;
     }
 }
 
@@ -712,8 +725,14 @@ void Application::resetZoom()
 
 void Application::cycleMode()
 {
-    state_.mode = (state_.mode == MagnifierMode::FollowMouse) ? MagnifierMode::Static
-                                                              : MagnifierMode::FollowMouse;
+    switch (state_.mode)
+    {
+    case MagnifierMode::Static:        state_.mode = MagnifierMode::FollowMouse;   break;
+    case MagnifierMode::FollowMouse:   state_.mode = MagnifierMode::AttachToMouse; break;
+    case MagnifierMode::AttachToMouse: state_.mode = MagnifierMode::Static;        break;
+    }
+    // Attached mode follows the cursor; the overlay would lag behind and block view.
+    if (state_.mode == MagnifierMode::AttachToMouse) state_.showOverlay = false;
 }
 
 void Application::toggleBorderless()

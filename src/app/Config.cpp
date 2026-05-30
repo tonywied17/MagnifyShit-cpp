@@ -14,6 +14,11 @@ namespace {
 
 constexpr int kSchemaVersion = 2;
 
+/**
+ * @brief Serialize hotkey bindings into a JSON object keyed by action id.
+ * @param m Hotkey map to serialize.
+ * @return JSON object containing each action's binding array.
+ */
 nlohmann::json hotkeysToJson(const HotkeyMap& m)
 {
     nlohmann::json out = nlohmann::json::object();
@@ -33,6 +38,11 @@ nlohmann::json hotkeysToJson(const HotkeyMap& m)
     return out;
 }
 
+/**
+ * @brief Load hotkey bindings from a JSON object into an existing map.
+ * @param j JSON object containing action binding arrays.
+ * @param m Hotkey map updated in place for keys found in `j`.
+ */
 void hotkeysFromJson(const nlohmann::json& j, HotkeyMap& m)
 {
     if (!j.is_object()) return;

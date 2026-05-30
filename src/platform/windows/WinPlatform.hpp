@@ -4,14 +4,21 @@
 
 namespace magshit::platform {
 
-/// One-time process setup: per-monitor DPI awareness, COM, etc. Call once
-/// at startup before creating windows.
+/**
+ * @brief Perform one-time Windows process setup.
+ */
 void initProcess();
 
-/// Returns the union of all monitor bounds in virtual-screen coordinates.
+/**
+ * @brief Query the union of all monitor bounds.
+ * @return Virtual-screen rectangle in desktop coordinates.
+ */
 Rect virtualScreenBounds() noexcept;
 
-/// Returns the cursor position in virtual-screen coordinates.
+/**
+ * @brief Query the current cursor position.
+ * @return Cursor position in virtual-screen coordinates.
+ */
 Point cursorPos() noexcept;
 
 } // namespace magshit::platform
