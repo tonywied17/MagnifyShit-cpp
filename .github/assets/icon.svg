@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="MagnifyShit">
+  <defs>
+    <linearGradient id="bgIcon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#101a2e"/>
+    </linearGradient>
+    <linearGradient id="rimIcon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7dd3fc"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <radialGradient id="glassIcon" cx="50%" cy="40%" r="65%">
+      <stop offset="0%"  stop-color="#ffffff" stop-opacity="0.32"/>
+      <stop offset="55%" stop-color="#7dd3fc" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#0b1220" stop-opacity="0.55"/>
+    </radialGradient>
+    <pattern id="gridIcon" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+      <path d="M14 0H0V14" fill="none" stroke="#1e293b" stroke-width="1"/>
+    </pattern>
+    <clipPath id="lensClipIcon">
+      <circle cx="0" cy="0" r="74"/>
+    </clipPath>
+    <linearGradient id="poopIcon" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#a3661f"/>
+      <stop offset="55%" stop-color="#7a4515"/>
+      <stop offset="100%" stop-color="#4a2708"/>
+    </linearGradient>
+    <symbol id="poopIconBody" overflow="visible">
+      <ellipse cx="0" cy="22"  rx="32" ry="11" fill="url(#poopIcon)"/>
+      <ellipse cx="-2" cy="6"  rx="24" ry="10" fill="url(#poopIcon)"/>
+      <ellipse cx="2"  cy="-9" rx="16" ry="9"  fill="url(#poopIcon)"/>
+      <ellipse cx="-1" cy="-21" rx="8"  ry="6"  fill="url(#poopIcon)"/>
+      <ellipse cx="-10" cy="2"  rx="5" ry="2" fill="#c98a3e" opacity="0.7"/>
+      <ellipse cx="-6"  cy="-12" rx="3" ry="1.5" fill="#c98a3e" opacity="0.7"/>
+      <circle cx="-9" cy="8" r="4" fill="#ffffff"/>
+      <circle cx="9"  cy="8" r="4" fill="#ffffff"/>
+      <circle cx="-8" cy="9" r="1.8" fill="#0b1220"/>
+      <circle cx="10" cy="9" r="1.8" fill="#0b1220"/>
+      <path d="M-7 17 Q0 23 7 17" fill="none" stroke="#0b1220" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+
+  <rect width="256" height="256" rx="48" fill="url(#bgIcon)"/>
+
+  <g transform="translate(118 118)">
+    <animateTransform attributeName="transform" type="translate"
+      values="108 118; 138 118; 108 118"
+      keyTimes="0;0.5;1" dur="6s" repeatCount="indefinite" calcMode="spline"
+      keySplines="0.42 0 0.58 1; 0.42 0 0.58 1"/>
+
+    <g clip-path="url(#lensClipIcon)">
+      <rect x="-100" y="-100" width="200" height="200" fill="#0b1220"/>
+      <g transform="scale(2.4)">
+        <rect x="-50" y="-50" width="100" height="100" fill="url(#gridIcon)"/>
+      </g>
+      <use href="#poopIconBody" x="0" y="0"/>
+      <circle cx="0" cy="0" r="74" fill="url(#glassIcon)"/>
+      <ellipse cx="-22" cy="-28" rx="30" ry="14" fill="#ffffff" opacity="0.28"/>
+    </g>
+
+    <circle cx="0" cy="0" r="74" fill="none" stroke="url(#rimIcon)" stroke-width="7"/>
+    <circle cx="0" cy="0" r="74" fill="none" stroke="#0b1220" stroke-width="1.5"/>
+
+    <g transform="rotate(35)">
+      <rect x="72" y="-10" width="56" height="20" rx="10" fill="#1e293b" stroke="url(#rimIcon)" stroke-width="2.5"/>
+    </g>
+
+    <circle cx="0" cy="0" r="80" fill="none" stroke="#7dd3fc" stroke-width="2" opacity="0.6">
+      <animate attributeName="r" values="80;100;80" dur="2.4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.6;0;0.6" dur="2.4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>
