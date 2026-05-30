@@ -1,4 +1,4 @@
-// MagnifyShit 2.0 entry point. All lifecycle lives in magshit::app::Application.
+// MagnifyShit entry point. All lifecycle lives in magshit::app::Application.
 
 #include "app/Application.hpp"
 
