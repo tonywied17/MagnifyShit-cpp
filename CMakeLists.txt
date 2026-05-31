@@ -11,11 +11,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# Static MSVC runtime is intentionally NOT used so the exe stays small and
-# matches what users already have via VC++ redistributables.
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 
-# LTO / IPO for optimized configs only.
+# LTO / IPO
 include(CheckIPOSupported)
 check_ipo_supported(RESULT MAGSHIT_IPO_OK OUTPUT MAGSHIT_IPO_ERR)
 if(MAGSHIT_IPO_OK)
@@ -30,8 +28,6 @@ if(MSVC)
     add_compile_options(
         /W4 /permissive- /Zc:__cplusplus /Zc:inline /Zc:preprocessor /utf-8 /MP
     )
-    # Optimized configs: enable function/data-level linking so the linker can
-    # drop unreferenced symbols and fold identical COMDATs.
     add_compile_options(
         $<$<NOT:$<CONFIG:Debug>>:/Gy>
         $<$<NOT:$<CONFIG:Debug>>:/Gw>
@@ -43,7 +39,6 @@ if(MSVC)
         $<$<NOT:$<CONFIG:Debug>>:/INCREMENTAL:NO>
         $<$<NOT:$<CONFIG:Debug>>:/DEBUG:NONE>
     )
-    # Debug: enable expand-once inlining so size doesn't balloon as badly.
     add_compile_options($<$<CONFIG:Debug>:/Ob1>)
 
     add_compile_definitions(
