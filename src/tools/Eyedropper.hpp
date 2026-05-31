@@ -5,7 +5,6 @@
 
 #include <d3d11.h>
 
-#include <array>
 #include <cstdint>
 #include <optional>
 
@@ -52,29 +51,9 @@ public:
      */
     const std::optional<PickedColor>& last() const noexcept { return last_; }
 
-    /**
-     * @brief Push a color sample onto the history ring.
-     * @param c Sample to store as the most recent entry.
-     */
-    void pushHistory(const PickedColor& c);
-
-    /**
-     * @brief Access the fixed-size history ring.
-     * @return Array of samples with index 0 as most recent.
-     */
-    const std::array<PickedColor, 8>& history() const noexcept { return history_; }
-
-    /**
-     * @brief Query the number of valid history entries.
-     * @return Count in the range 0..8.
-     */
-    size_t historyCount() const noexcept { return histCount_; }
-
 private:
     ComPtr<ID3D11Texture2D> staging_;
     std::optional<PickedColor> last_;
-    std::array<PickedColor, 8> history_{};
-    size_t histCount_ = 0;
 };
 
 } // namespace magshit::tools

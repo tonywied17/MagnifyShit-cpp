@@ -56,18 +56,25 @@ Prebuilt Windows binaries are produced by CI for every push and attached to GitH
 
 ## Build from source
 
-Requirements: Visual Studio 2022 (v17.10+), CMake >= 3.24, Windows 10/11.
+Requirements: Visual Studio 2022 Build Tools (v17.10+), [Ninja](https://github.com/ninja-build/ninja/releases) on `PATH`, CMake >= 3.24, Windows 10/11. Run from a **Developer PowerShell for VS 2022** so `cl.exe`/`link.exe` are on `PATH`.
 
 ```powershell
-cmake --preset windows-msvc-release
-cmake --build --preset windows-msvc-release
-.\build\windows-msvc-release\bin\Release\MagnifyShit.exe
+cmake --preset windows                  # one binary tree, multi-config
+cmake --build --preset release          # build optimized exe
+ctest --preset release                  # run unit tests
+.\build\Release\MagnifyShit.exe
+```
+
+Build a distributable ZIP locally — identical to what CI publishes:
+
+```powershell
+cpack --preset release
+# -> build\package\MagnifyShit-2.1.0-win64.zip
 ```
 
 Available presets:
-- `windows-msvc-debug`
-- `windows-msvc-release`
-- `windows-msvc-asan`
+- `windows` — Ninja Multi-Config (Debug + Release in one tree). Build with `--preset release` or `--preset debug`.
+- `windows-asan` — Debug + AddressSanitizer (separate tree under `build-asan/`).
 
 All dependencies (Dear ImGui, stb, nlohmann/json, doctest) are vendored under `extern/`. No package manager required.
 

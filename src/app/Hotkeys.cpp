@@ -214,11 +214,4 @@ std::string bindingToString(const HotkeyBinding& b)
     return s;
 }
 
-bool bindingEquals(const HotkeyBinding& a, const HotkeyBinding& b)
-{
-    if (a.mods != b.mods || a.trigger != b.trigger) return false;
-    if (a.trigger == HotkeyTrigger::Key) return a.vk == b.vk;
-    return true;
-}
-
 } // namespace magshit::app

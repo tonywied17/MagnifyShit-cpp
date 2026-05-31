@@ -7,7 +7,6 @@
 #include "../tools/Screenshot.hpp"
 #include "../ui/Theme.hpp"
 #include "../util/Geometry.hpp"
-#include "../ui/Theme.hpp"
 #include "Hotkeys.hpp"
 
 #include <Windows.h>
@@ -161,11 +160,6 @@ private:
      * @param delta The wheel delta.
      */
     void onWheel(short delta);
-
-    /**
-     * @brief Hook for primary-button activation (currently a no-op stub).
-     */
-    void onLeftClick();
 
     /**
      * @brief Multiplicatively change zoom and clamp to [zoomMin, zoomMax].

@@ -120,12 +120,4 @@ std::uint8_t currentModifierMask();
  */
 std::string bindingToString(const HotkeyBinding& b);
 
-/**
- * @brief Compare two bindings by their input identity.
- * @param a First binding.
- * @param b Second binding.
- * @return true when both bindings represent the same trigger, modifiers, and key.
- */
-bool bindingEquals(const HotkeyBinding& a, const HotkeyBinding& b);
-
 } // namespace magshit::app

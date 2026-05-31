@@ -1,7 +1,5 @@
 #include "Eyedropper.hpp"
 
-#include <algorithm>
-
 namespace magshit::tools {
 
 bool Eyedropper::ensureStaging(ID3D11Device* device)
@@ -59,16 +57,6 @@ std::optional<PickedColor> Eyedropper::sample(ID3D11Device* device,
     context->Unmap(staging_.Get(), 0);
     last_ = c;
     return c;
-}
-
-void Eyedropper::pushHistory(const PickedColor& c)
-{
-    for (size_t i = (std::min)(histCount_, history_.size() - 1); i > 0; --i)
-    {
-        history_[i] = history_[i - 1];
-    }
-    history_[0] = c;
-    if (histCount_ < history_.size()) ++histCount_;
 }
 
 } // namespace magshit::tools

@@ -438,10 +438,6 @@ LRESULT Application::handleMessage(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lP
             handled = true;
             return 0;
         }
-        if (msg == WM_LBUTTONDOWN)
-        {
-            onLeftClick();
-        }
         handled = true;
         return 0;
     }
@@ -653,8 +649,6 @@ bool Application::forwardMouseEvent(POINT clientPt, UINT msg, WPARAM /*wParam*/)
     }
     return true;
 }
-
-void Application::onLeftClick() {}
 
 void Application::copyHexAtCursor()
 {
