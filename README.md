@@ -69,7 +69,7 @@ Build a distributable ZIP locally — identical to what CI publishes:
 
 ```powershell
 cpack --preset release
-# -> build\package\MagnifyShit-2.1.0-win64.zip
+# -> build\package\MagnifyShit-2.1.1-win64.zip
 ```
 
 Available presets:
