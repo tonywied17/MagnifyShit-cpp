@@ -11,7 +11,6 @@ Mainly created to emulate a bifocal lense as a borderless window for my one moni
 <a href="../../releases"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-downloads-magnify.svg?v=6bfe089a" alt="downloads" /></a>
 <a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-download-magnify.svg?v=ee8c3187" alt="download latest" /></a>
 <img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-last-commit-magnify.svg?v=c231f86d" alt="last commit" />
->>>>>>> 8c1600a (docs(readme): update badges to docs/release/downloads/download/last-commit set)
 
 > Built with C++20, Direct3D 11, DXGI Desktop Duplication, and Dear ImGui.
 
