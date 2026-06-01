@@ -6,11 +6,12 @@
 
 Mainly created to emulate a bifocal lense as a borderless window for my one monitor that is too far away because i'm blind. 
 
-<a href="../../actions/workflows/build.yml"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-ci-magnify.svg?v=ef7a239a" alt="build" /></a>
-<a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-release-magnify.svg?v=9863b0e8" alt="release" /></a>
-<a href="../../releases"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-downloads-magnify.svg?v=1db5fb8c" alt="downloads" /></a>
-<img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-last-commit-magnify.svg?v=118eb98a" alt="last commit" />
-<a href="LICENSE"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-license-magnify.svg?v=5e4a88bb" alt="license" /></a>
+<a href="README.md"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-docs-magnify.svg?v=0980c5dc" alt="docs" /></a>
+<a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-release-magnify.svg?v=3840d8fb" alt="release" /></a>
+<a href="../../releases"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-downloads-magnify.svg?v=6bfe089a" alt="downloads" /></a>
+<a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-download-magnify.svg?v=ee8c3187" alt="download latest" /></a>
+<img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-last-commit-magnify.svg?v=c231f86d" alt="last commit" />
+>>>>>>> 8c1600a (docs(readme): update badges to docs/release/downloads/download/last-commit set)
 
 > Built with C++20, Direct3D 11, DXGI Desktop Duplication, and Dear ImGui.
 
