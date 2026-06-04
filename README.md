@@ -10,7 +10,7 @@ Mainly created to emulate a bifocal lense as a borderless window for my one moni
 <a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-release-magnify.svg?v=4284b24c" alt="release" /></a>
 <a href="../../releases"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-downloads-magnify.svg?v=f4be6fc4" alt="downloads" /></a>
 <a href="../../releases/latest"><img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-download-magnify.svg?v=ed4e52af" alt="download latest" /></a>
-<img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-last-commit-magnify.svg?v=a5ce68b8" alt="last commit" />
+<img src="https://raw.githubusercontent.com/tonywied17/tonywied17/main/.github/badges/magnifyshit-last-commit-magnify.svg?v=cd985139" alt="last commit" />
 
 > Built with C++20, Direct3D 11, DXGI Desktop Duplication, and Dear ImGui.
 
